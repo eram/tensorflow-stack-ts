@@ -1,0 +1,27 @@
+{
+  "name": "tensorflow-stack-ts",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eram/tensorflow-stack-ts.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eram/tensorflow-stack-ts/issues"
+  },
+  "homepage": "https://github.com/eram/tensorflow-stack-ts#readme",
+  "dependencies": {
+    "dotenv": "^6.1.0",
+    "dotenv-expand": "^4.2.0"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.3"
+  }
+}
