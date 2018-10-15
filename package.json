@@ -1,27 +1,81 @@
 {
-  "name": "tensorflow-stack-ts",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eram/tensorflow-stack-ts.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/eram/tensorflow-stack-ts/issues"
-  },
-  "homepage": "https://github.com/eram/tensorflow-stack-ts#readme",
-  "dependencies": {
-    "dotenv": "^6.1.0",
-    "dotenv-expand": "^4.2.0"
-  },
-  "devDependencies": {
-    "@types/dotenv": "^4.0.3"
-  }
+    "name": "tensorflow-stack-ts",
+    "version": "0.4.0",
+    "description": "tensortflow.js full-stack starter kit",
+    "scripts": {
+        "build": "npm run build:prod",
+        "start": "npm run build:live",
+        "build:debug": "tsc -p ./tsconfig.test.json --pretty",
+        "build:prod": "tsc -p ./tsconfig.prod.json --pretty",
+        "build:live": "nodemon -w ./src --exec ts-node --project ./tsconfig.test.json --pretty ./src/index.ts",
+        "test": "npm run test:cover",
+        "test:cover": "jest --coverage --no-cache --config ./jest.json",
+        "test:nocover": "jest --config ./jest.json",
+        "test:watch": "jest --watch --config ./jest.json",
+        "clean": "rimraf ./build",
+        "clean:caches": "npm cache clean --force && jest --clearCache",
+        "pretest": "npm run clean && npm run lint && npm run build",
+        "lint": "tslint --format stylish --project ./tsconfig.json"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/eram/tensorflow-stack-ts.git"
+    },
+    "homepage": "https://github.com/eram/tensorflow-stack-ts#readme",
+    "main": "./build/dist/index.js",
+    "typings": "./build/dist/index.d.ts",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/eram/tensorflow-stack-ts/issues"
+    },
+    "keywords": [
+        "tensorflow.js",
+        "graphql",
+        "typescript",
+        "react"
+    ],
+    "dependencies": {
+        "@koa/cors": "^2.2.2",
+        "@tensorflow/tfjs": "^0.13.1",
+        "dotenv": "^6.1.0",
+        "dotenv-expand": "^4.2.0",
+        "freeze-mutate": "^1.1.2",
+        "graphql": "0.13.2",
+        "http-error-codes": "^1.0.1",
+        "koa": "^2.5.3",
+        "koa-bodyparser": "^4.2.1",
+        "koa-compose": "^4.1.0",
+        "koa-compress": "^3.0.0",
+        "koa-errors": "^1.0.1",
+        "koa-graphql": "^0.7.5",
+        "koa-joi-router": "^5.1.0",
+        "koa-static": "^5.0.0",
+        "koa-useragent": "^1.1.0",
+        "typegql": "^0.6.0"
+    },
+    "devDependencies": {
+        "@types/dotenv": "^4.0.3",
+        "@types/graphql": "0.13.2",
+        "@types/http-errors": "^1.6.1",
+        "@types/jest": "^23.3.2",
+        "@types/joi": "^13.4.5",
+        "@types/koa": "^2.0.46",
+        "@types/koa-bodyparser": "^5.0.1",
+        "@types/koa-compose": "^3.2.2",
+        "@types/koa-compress": "^2.0.8",
+        "@types/koa-joi-router": "^5.0.3",
+        "@types/koa-static": "^4.0.0",
+        "@types/koa__cors": "^2.2.3",
+        "@types/node": "^10.11.2",
+        "@types/supertest": "^2.0.6",
+        "concurrently": "^4.0.1",
+        "jest": "^23.6.0",
+        "nodemon": "^1.18.4",
+        "rimraf": "^2.6.2",
+        "supertest": "^3.3.0",
+        "ts-jest": "^23.10.4",
+        "ts-node": "^7.0.1",
+        "tslint": "^5.11.0",
+        "typescript": "^3.1.3"
+    }
 }

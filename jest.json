@@ -1,0 +1,23 @@
+{
+  "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+  },
+  "rootDir": "./",
+  "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(js|ts|tsx|jsx)?$",
+  "testPathIgnorePatterns": ["/lib/", "/node_modules/", "<rootDir>/build/", "<rootDir>/client/"],
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "collectCoverage": false,
+  "coverageDirectory": "<rootDir>/build/reports",
+  "collectCoverageFrom": [
+    "src/**/*.ts",
+    "!src/**/*.spec.ts",
+    "!src/**/*.d.ts",
+    "!src/**/index.ts",
+    "!src/**/*.test.*",
+    "!src/processOn.ts",
+    "!src/graphqlApi/patch.ts",
+    "!client/**"
+  ],
+  "coverageReporters": ["html", "lcov", "text"],
+  "testEnvironment": "node"
+}
