@@ -1,0 +1,26 @@
+// Import Ant Design styles entry point
+@import "~antd/dist/antd.less"; 
+ // variables to override above
+@import "./theme.less";
+
+.ant-layout-header {
+    background-color: @layout-body-background ;
+    height: 40px;
+}
+
+.ant-layout-sider-collapsed .nav-text {
+    display: none;
+}
+
+.ant-layout-sider-collapsed .ant-menu-submenu-vertical>.ant-menu-submenu-title:after {
+    display: none;
+}
+
+.ant-card {
+    margin: 10px;
+}
+
+// user-menu
+.ant-col-3 {
+	width: initial;
+}

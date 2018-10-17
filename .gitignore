@@ -8,8 +8,10 @@
 
 # testing
 /coverage
-/client/covarage
-.vscode/chrome
+/.vscode/chrome
+/client/coverage
+/client/.vscode/chrome
+*.dead
 
 # misc
 .DS_Store

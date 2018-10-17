@@ -1,6 +1,6 @@
 {
   "extends": "../tsconfig.json",
-  "rootDir": ".",
+  "rootdir": ".",
   "exclude": [
     "node_modules",
     "build",
@@ -8,6 +8,7 @@
     "acceptance-tests",
     "webpack",
     "jest",
+    "coverage"
   ]
 
 }

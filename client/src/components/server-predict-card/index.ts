@@ -1,0 +1,1 @@
+export { PredictCard } from "./PredictCard";

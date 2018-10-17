@@ -17,12 +17,12 @@
         "strictNullChecks": true,
         "suppressImplicitAnyIndexErrors": true,
         "noUnusedLocals": true,
-        "typeRoots": ["node_modules/@types"],       /* List of folders to include type definitions from. */
+        "typeRoots": ["node_modules/@types"],    /* List of folders to include type definitions from. */
         "types": ["jest", "node"],
         /* Type declaration files to be included in compilation. */
-        // "allowSyntheticDefaultImports": true,    /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
-        "esModuleInterop": true,                    /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-        // "skipLibCheck": true,                       /*  work with Jest framework. Webpack failures: The Jest’s file definitions miss the Set class*/
+        "allowSyntheticDefaultImports": true,    /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+        "esModuleInterop": true,                 /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+        // "skipLibCheck": true,                 /*  work with Jest framework. Webpack failures: The Jest’s file definitions miss the Set class*/
 
         /* Source Map Options */
         "sourceMap": true,

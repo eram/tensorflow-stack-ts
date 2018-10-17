@@ -1,15 +1,15 @@
+/*
+ *  config-overrides.js is the place to transform the webpack config beofre it is compiled.
+ *  This is relevant until you "eject" the project from react-create-app.
+ */
 const log = require("util").log;
-const { injectBabelPlugin} = require("react-app-rewired");
+const { injectBabelPlugin } = require("react-app-rewired");
 const rewireLess = require("react-app-rewire-less");
 const dotenv = require("dotenv");
 const dotenvExpand = require("dotenv-expand");
 const fs = require("fs");
 
 module.exports = function override(config, env) {
-
-    /*
-     *  do stuff with the webpack config...
-     */
 
     // antd & crss
     config = injectBabelPlugin(
@@ -61,16 +61,25 @@ function appendDotenv(config) {
 
     if (plugin) {
         for (var key in env) {
-            if (key && key.indexOf("REACT_APP_") === 0) {
-                if (!plugin.definitions["process.env"][key]) {
-                    plugin.definitions["process.env"][key] = JSON.stringify(env[key]);
+            if (key) {
+
+                if (key.indexOf("REACT_APP_") === 0) {
+                    if (!plugin.definitions["process.env"][key]) {
+                        plugin.definitions["process.env"][key] = JSON.stringify(env[key]);
+                    }
+                    if (!process.env[key]) {
+                        process.env[key] = env[key];
+                    }
+                    found++;
                 }
-                if (!process.env[key]) {
-                    process.env[key] = env[key];
+
+                if (key.indexOf("REACT_APP_PORT" === 0)) {
+                    if (!process.env.PORT) {
+                        process.env.PORT = Number.parseInt(env.REACT_APP_PORT, 10);
+                        log(`process.env.PORT: ${process.env.PORT}`);
+                    }
                 }
-                found++;
             }
-            // log(`appendDotenv ${elem.indexOf("REACT_APP_") !== -1}: ${elem}=${env[elem]}`);
         }
     }
 

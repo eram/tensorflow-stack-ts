@@ -4,7 +4,8 @@
     "description": "tensortflow.js full-stack starter kit",
     "scripts": {
         "build": "npm run build:prod",
-        "start": "npm run build:live",
+        "start": "concurrently \"npm run build:live\" \"npm run client\"",
+        "client": "cd client && npm start",
         "build:debug": "tsc -p ./tsconfig.test.json --pretty",
         "build:prod": "tsc -p ./tsconfig.prod.json --pretty",
         "build:live": "nodemon -w ./src --exec ts-node --project ./tsconfig.test.json --pretty ./src/index.ts",

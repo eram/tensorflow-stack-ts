@@ -2,27 +2,50 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "antd": "^3.10.0",
-    "babel-plugin-import": "^1.9.1",
-    "react": "^16.5.2",
-    "react-app-rewire-less": "^2.1.3",
-    "react-app-rewired": "^1.6.2",
-    "react-dom": "^16.5.2",
-    "react-scripts-ts": "3.1.0"
-  },
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts-ts",
     "build": "react-app-rewired build --scripts-version react-scripts-ts",
     "test": "react-app-rewired test --env=jsdom --scripts-version react-scripts-ts",
-    "eject": "react-app-rewired eject --scripts-version react-scripts-ts"
+    "eject": "react-app-rewired eject --scripts-version react-scripts-ts",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
+    "clean": "rimraf build"
+  },
+  "dependencies": {
+    "antd": "^3.10.0",
+    "graphql-request": "^1.8.2",
+    "http-status-codes": "^1.3.0",
+    "react": "^16.5.2",
+    "react-app-rewired": "^1.6.2",
+    "react-dom": "^16.5.2",
+    "react-router": "^4.3.1",
+    "react-router-config": "^4.4.0-beta.1",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^1.1.5",
+    "react-scripts-ts": "3.1.0",
+    "react-vega": "^4.0.2",
+    "react-vega-lite": "^2.0.2",
+    "vega-lib": "^4.2.0",
+    "vega-lite": "^3.0.0-rc6"
   },
   "devDependencies": {
-    "@types/dotenv": "^4.0.3",
     "@types/jest": "^23.3.5",
     "@types/node": "^10.11.7",
     "@types/react": "^16.4.16",
     "@types/react-dom": "^16.0.9",
-    "typescript": "^3.1.3"
+    "@types/react-router": "^4.0.32",
+    "@types/react-router-config": "^1.0.9",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/react-test-renderer": "^16.0.3",
+    "dotenv": "^6.1.0",
+    "dotenv-expand": "^4.2.0",
+    "eslint": "^5.7.0",
+    "eslint-plugin-react": "^7.11.1",
+    "jest": "^23.6.0",
+    "jest-css-modules-transform": "^2.1.1",
+    "react-app-rewire-less": "^2.1.3",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.4",
+    "typescript": "^3.1.3",
+    "webpack": "^4.20.2"
   }
 }
