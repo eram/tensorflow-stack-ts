@@ -20,6 +20,8 @@ A well integrated, full-stack working sample:
 - [Keep it simple philosophy across](https://www.slideshare.net/ethanram/kissts-the-keep-it-simple-software-stack-for-2017-82329212)! I've saved a ton of learning-curve time by **not** a bunch of libs that I found old-fashioned or cumbersome: Redux, Apollo server/client, Enzym, REST, yarn, Babel, Winston/Bunyan, Relay... 
 - As a bonus, you get the trivial Todo application integrated here as well. So this can work for you "even" if this is not an AI-based project.
 
+![TensorFlow-Stack-TS - Kickstart Your AI Project - TensorFlow.js Full-Stack Starter Kit](public/img/screenshot1.png)
+
 ## Main integrated libraries in the stack
 
 ### Backend side
