@@ -3,67 +3,69 @@
     // Hover to view descriptions of existing attributes.
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
-    "configurations": [        {
-        "name": "Debug server",
-        "type": "node",
-        "request": "launch",
-        "args": [
-            "src/index.ts"
-        ],
-        "runtimeArgs": [
-            "--inspect-brk",
-            "--nolazy",
-            "-r",
-            "ts-node/register"
-        ],
-        "protocol": "inspector",
-        "console": "externalTerminal",
-        "internalConsoleOptions": "neverOpen",
-        "sourceMaps": true,
-        "port": 9229,
-        "env": {
-            "TS_NODE_PROJECT": "./tsconfig.test.json",
+    "configurations": [
+        {
+            "name": "Debug server",
+            "type": "node",
+            "request": "launch",
+            "args": [
+                "src/index.ts"
+            ],
+            "runtimeArgs": [
+                "--inspect-brk",
+                "--nolazy",
+                "-r",
+                "ts-node/register"
+            ],
+            "protocol": "inspector",
+            "console": "externalTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true,
+            "port": 9229,
+            "env": {
+                "TS_NODE_PROJECT": "./tsconfig.test.json",
+            }
+        },
+        {
+            "name": "Jest all",
+            "type": "node",
+            "request": "launch",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceRoot}/node_modules/jest/bin/jest.js",
+                "--runInBand",
+                // "--coverage",
+                "--config",
+                "${workspaceRoot}/jest.json"
+            ],
+            "console": "externalTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "sourceMaps": true,
+            "port": 9229,
+            "env": {
+                "TS_NODE_PROJECT": "./tsconfig.test.json",
+            }
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Jest here",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceRoot}/node_modules/jest/bin/jest.js",
+                "--runInBand",
+                // "--detectOpenHandles",
+                // "--coverage",
+                "--config",
+                "${workspaceRoot}/jest.json",
+                "${relativeFile}"
+            ],
+            "console": "externalTerminal",
+            "sourceMaps": true,
+            "port": 9229,
+            "env": {
+                "TS_NODE_PROJECT": "./tsconfig.test.json",
+            }
         }
-    },
-    {
-        "name": "Jest all",
-        "type": "node",
-        "request": "launch",
-        "runtimeArgs": [
-            "--inspect-brk",
-            "${workspaceRoot}/node_modules/jest/bin/jest.js",
-            "--runInBand",
-            // "--coverage",
-            "--config",
-            "${workspaceRoot}/jest.json"
-        ],
-        "console": "externalTerminal",
-        "internalConsoleOptions": "neverOpen",
-        "sourceMaps": true,
-        "port": 9229,
-        "env": {
-            "TS_NODE_PROJECT": "./tsconfig.test.json",
-        }
-    },
-    {
-        "type": "node",
-        "request": "launch",
-        "name": "Jest here",
-        "runtimeArgs": [
-            "--inspect-brk",
-            "${workspaceRoot}/node_modules/jest/bin/jest.js",
-            "--runInBand",
-            // "--detectOpenHandles",
-            // "--coverage",
-            "--config",
-            "${workspaceRoot}/jest.json",
-            "${relativeFile}"
-        ],
-        "console": "externalTerminal",
-        "sourceMaps": true,
-        "port": 9229,
-        "env": {
-            "TS_NODE_PROJECT": "./tsconfig.test.json",
-        }
-    }]
+    ]
 }

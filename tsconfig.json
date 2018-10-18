@@ -4,7 +4,7 @@
         "outDir": "build/debug",
         "module": "esnext",
         "target": "es6",
-        "lib": ["es6", "dom", "esnext"],
+        "lib": ["dom", "esnext"],
         "allowJs": true,
         "jsx": "react",
         "moduleResolution": "node",

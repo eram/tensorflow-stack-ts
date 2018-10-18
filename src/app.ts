@@ -9,7 +9,7 @@ import compress from "koa-compress";
 const userAgent = require("koa-useragent") as Koa.Middleware;
 import { responseTimeHandler } from "./middleware/responseTime";
 import { errorChainHandler, appendError, onCtxError } from "./middleware/errorChain";
-import { appGlobals } from "./";
+import { getAppGlobals } from "./appGlobals";
 
 export type RouterHandler = (ctx: Koa.Context, next?: () => Promise<void>) => Promise<void>;
 
@@ -38,7 +38,7 @@ export function main(routes: IRoute[]): Koa {
         .use(responseTimeHandler)
         .use(cors());
 
-    if (!appGlobals.dev) {
+    if (!getAppGlobals().dev) {
         app.use(compress());
     }
 

@@ -1,0 +1,192 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`StatusCard testing StatusCard snapshot is ok 1`] = `
+<div>
+  <div
+    className="ant-card ant-card-bordered"
+  >
+    <div
+      className="ant-card-head"
+      style={Object {}}
+    >
+      <div
+        className="ant-card-head-wrapper"
+      >
+        <div
+          className="ant-card-head-title"
+        >
+          Todo List
+        </div>
+      </div>
+    </div>
+    <div
+      className="ant-card-body"
+      style={Object {}}
+    >
+      <button
+        className="ant-btn ant-btn-primary"
+        onClick={[Function]}
+        title={undefined}
+        type="button"
+      >
+        <i
+          className="anticon anticon-plus"
+        >
+          <svg
+            aria-hidden="true"
+            className=""
+            data-icon="plus"
+            fill="currentColor"
+            height="1em"
+            onClick={undefined}
+            style={undefined}
+            viewBox="64 64 896 896"
+            width="1em"
+          >
+            <path
+              d="M848 474H550V152h-76v322H176c-4.4 0-8 3.6-8 8v60c0 4.4 3.6 8 8 8h298v322h76V550h298c4.4 0 8-3.6 8-8v-60c0-4.4-3.6-8-8-8z"
+            />
+          </svg>
+        </i>
+        <span>
+          New Task
+        </span>
+      </button>
+      <div
+        className="ant-table-wrapper"
+        style={undefined}
+      >
+        <div
+          className="ant-spin-nested-loading"
+          style={null}
+        >
+          <div
+            className="ant-spin-container"
+          >
+            <div
+              className="ant-table ant-table-default ant-table-empty ant-table-scroll-position-left"
+              id={undefined}
+              style={Object {}}
+            >
+              <div
+                className="ant-table-content"
+              >
+                <div
+                  className="ant-table-body"
+                  onScroll={[Function]}
+                  onWheel={[Function]}
+                  style={Object {}}
+                >
+                  <table
+                    className=""
+                    style={Object {}}
+                  >
+                    <colgroup>
+                      <col
+                        style={
+                          Object {
+                            "minWidth": undefined,
+                            "width": undefined,
+                          }
+                        }
+                      />
+                      <col
+                        style={
+                          Object {
+                            "minWidth": undefined,
+                            "width": undefined,
+                          }
+                        }
+                      />
+                      <col
+                        style={
+                          Object {
+                            "minWidth": undefined,
+                            "width": undefined,
+                          }
+                        }
+                      />
+                      <col
+                        style={
+                          Object {
+                            "minWidth": undefined,
+                            "width": undefined,
+                          }
+                        }
+                      />
+                    </colgroup>
+                    <thead
+                      className="ant-table-thead"
+                    >
+                      <tr
+                        style={
+                          Object {
+                            "height": null,
+                          }
+                        }
+                      >
+                        <th
+                          className=""
+                        >
+                          <div
+                            className={undefined}
+                            onClick={[Function]}
+                            title={undefined}
+                          >
+                            Id
+                          </div>
+                        </th>
+                        <th
+                          className=""
+                        >
+                          <div
+                            className={undefined}
+                            onClick={[Function]}
+                            title={undefined}
+                          >
+                            Task
+                          </div>
+                        </th>
+                        <th
+                          className=""
+                        >
+                          <div
+                            className={undefined}
+                            onClick={[Function]}
+                            title={undefined}
+                          >
+                            Status
+                          </div>
+                        </th>
+                        <th
+                          className=""
+                        >
+                          <div
+                            className={undefined}
+                            onClick={[Function]}
+                            title={undefined}
+                          >
+                            Action
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      className="ant-table-tbody"
+                    />
+                  </table>
+                </div>
+                <div
+                  className="ant-table-placeholder"
+                >
+                  No data
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

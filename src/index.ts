@@ -9,15 +9,12 @@ import { IndexSig } from "./utils";
 import * as GqlApi from "./graphqlApi";
 import * as Model from "./tensorFlowProvider";
 import { setProcessHandelers } from "./processOn";
-import { AppGlobals } from "./appGlobals";
+import { getAppGlobals } from "./appGlobals";
 
 
 // tslint:disable-next-line:no-require-imports no-unsafe-any no-var-requires
 const graphqlHTTP: (options: IndexSig) => App.RouterHandler = require("koa-graphql");
-
-
-// application globals
-export const appGlobals = new AppGlobals();
+const appGlobals = getAppGlobals();
 
 async function main(argv: string[]): Promise<number> {
 

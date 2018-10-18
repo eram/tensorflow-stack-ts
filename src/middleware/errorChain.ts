@@ -1,7 +1,9 @@
 import Koa from "koa";
 import { IndexSig } from "src/utils";
 import HttpErrors from "http-errors";
-import { appGlobals } from "../";
+import { getAppGlobals } from "../appGlobals";
+
+const appGlobals = getAppGlobals();
 
 export async function errorChainHandler(ctx: Koa.Context, next: () => Promise<void>) {
 

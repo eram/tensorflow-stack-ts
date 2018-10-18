@@ -12,9 +12,9 @@ export class AboutPage extends React.Component<{}, {}> {
         </div>
         <p className="about-intro">
           App version: {process.env.REACT_APP_VERSION}<br />
-          Endpoint: <a href={process.env.REACT_APP_ENDPOINT}>{process.env.REACT_APP_ENDPOINT}</a><br />
-
-          To get started, edit <code>src/App.tsx</code> and save to reload.
+          GraphQL endpoint: <a href={`${process.env.REACT_APP_ENDPOINT}?query={%0A%20 getName%0A}%0A`}>
+            {process.env.REACT_APP_ENDPOINT}</a><br />
+          To get started, edit <code>src/containers/pages/AboutPage.tsx</code> and in a few seconds it reloads.
         </p>
         <Rate character="6" />
       </div>

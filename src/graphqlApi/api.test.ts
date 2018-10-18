@@ -3,7 +3,7 @@ import * as Api from "./api";
 import { ModelProviderBase, State } from "../modelProviderBase";
 import { GraphQLSchema, GraphQLError } from "graphql";
 import { patchGraphQL } from "./patch";
-import { appGlobals } from "../";
+import { getAppGlobals } from "../appGlobals";
 import { healthcheck } from "./apiHealthcheck";
 
 // tslint:disable-next-line:no-var-requires no-require-imports no-unsafe-any
@@ -122,7 +122,7 @@ describe("GrpahQl API test", () => {
 
     test("apiHealthcheck works ok", async () => {
 
-        appGlobals.schema = schema ;
+        getAppGlobals().schema = schema ;
         const rc = await healthcheck() ;
         expect(rc).not.toBeUndefined();
         expect(rc.ok).toBeTruthy();

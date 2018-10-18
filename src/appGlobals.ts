@@ -15,3 +15,9 @@ export class AppGlobals {
     public schema?: GraphQLSchema;
     public server?: Http.Server;
 }
+
+const g = new AppGlobals();
+
+export function getAppGlobals() {
+    return g;
+}

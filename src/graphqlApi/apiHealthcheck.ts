@@ -1,6 +1,6 @@
 
 import { GraphQLSchema, GraphQLError } from "graphql";
-import { appGlobals } from "../";
+import { getAppGlobals } from "../appGlobals";
 import * as Model from "../modelProviderBase";
 
 // tslint:disable-next-line:interface-name
@@ -17,6 +17,8 @@ interface IgetType {
     getState: number;
     getName: string;
 }
+
+const appGlobals = getAppGlobals();
 
 export async function healthcheck(): Promise<{ ok: boolean, msg: string }> {
     const rc = { ok: false, msg: "GraphQL API error" };

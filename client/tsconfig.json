@@ -1,14 +1,48 @@
 {
-  "extends": "../tsconfig.json",
-  "rootdir": ".",
-  "exclude": [
-    "node_modules",
-    "build",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest",
-    "coverage"
-  ]
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "build/debug",
+        "module": "esnext",
+        "target": "es6",
+        "lib": ["es2015", "dom", "esnext"],
+        "allowJs": true,
+        "jsx": "react",
+        "moduleResolution": "node",
+        "rootDir": "./",
+        // "forceConsistentCasingInFileNames": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noImplicitAny": true,
+        "importHelpers": true,
+        "strictNullChecks": true,
+        "suppressImplicitAnyIndexErrors": true,
+        "noUnusedLocals": true,
+        "typeRoots": ["node_modules/@types"],    /* List of folders to include type definitions from. */
+        "types": ["jest", "node"],
+        /* Type declaration files to be included in compilation. */
+        "allowSyntheticDefaultImports": true,    /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
+        "esModuleInterop": true,                 /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
+        // "skipLibCheck": true,                 /*  work with Jest framework. Webpack failures: The Jest’s file definitions miss the Set class*/
 
+        /* Source Map Options */
+        "sourceMap": true,
+        // "sourceRoot": "",                      /* Specify the location where debugger should locate TypeScript files instead of source locations. */
+        // "mapRoot": "",                         /* Specify the location where debugger should locate map files instead of generated locations. */
+        // "inlineSourceMap": true,               /* Emit a single file with source maps instead of having a separate file. */
+        // "inlineSources": true,                 /* Emit the source alongside the sourcemaps within a single file; requires '--inlineSourceMap' or '--sourceMap' to be set. */
+
+        /* Experimental Options */
+        "experimentalDecorators": true,
+        /* Enables experimental support for ES7 decorators. */
+        "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */
+    },
+    "exclude": [
+        "node_modules",
+        "build",
+        "scripts",
+        "acceptance-tests",
+        "webpack",
+        "jest",
+        "src/setupTests.ts"
+    ]
 }
