@@ -1,4 +1,4 @@
-import { ClientWrapper } from "./";
+import { ClientWrapper } from ".";
 
 test("jest is alive", () => {
     expect(true).toBeTruthy();

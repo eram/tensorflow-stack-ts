@@ -43,6 +43,9 @@
         "acceptance-tests",
         "webpack",
         "jest",
-        "src/setupTests.ts"
+        "coverage",
+        "src/setupTests.ts",
+        "**/__tests__/**/*",
+        "**/*.test.*"
     ]
 }

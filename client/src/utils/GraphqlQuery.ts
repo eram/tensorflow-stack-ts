@@ -1,6 +1,6 @@
 import { GraphQLClient } from "graphql-request";
 import * as HttpStaus from "http-status-codes";
-import { IndexSig } from "./";
+import { IndexSig } from ".";
 
 
 /**
