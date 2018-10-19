@@ -54,17 +54,17 @@ describe("GrpahQl API test", () => {
         expect(fields && fields.predict && fields.predict.name === "predict").toBeTruthy();
     });
 
-    interface IgetStateType { getState: number; }
+    interface IgetStateType { getState: string; }
 
     test("get some results from schema.getState function", async () => {
 
         const response = await graphqlFn<IgetStateType>(schema, "{ getState }");
 
-        if (!response || !response.data || typeof response.data.getState !== "number") {
+        if (!response || !response.data || typeof response.data.getState !== "string") {
             throw new Error("Invalid response from getSate");
         }
 
-        expect(response.data.getState).toEqual(2);   // State.unintialized??
+        expect(response.data.getState).toEqual(State[State.compiled]);   // State.unintialized??
     });
 
     interface IgetNameType { getName: string; }

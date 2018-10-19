@@ -14,7 +14,7 @@ type graphqlType = <T>(schema: GraphQLSchema, query: string) => Promise<Executio
 const graphqlFn: graphqlType = require("graphql").graphql;
 
 interface IgetType {
-    getState: number;
+    getState: string;
     getName: string;
 }
 
@@ -30,11 +30,11 @@ export async function healthcheck(): Promise<{ ok: boolean, msg: string }> {
         if (!!response && response.errors) {
                 rc.msg = response.errors[0].message ;
 
-        } else if (!!response && response.data && typeof response.data.getState === "number"
+        } else if (!!response && response.data && typeof response.data.getState === "string"
         && typeof response.data.getName === "string") {
 
-            rc.ok = response.data.getState !== Model.State.error ;
-            rc.msg = `provider=${response.data.getName} state=${Model.State[response.data.getState]}`;
+            rc.ok = response.data.getState !== Model.State[Model.State.error] ;
+            rc.msg = `provider=${response.data.getName} state=${response.data.getState}`;
         }
     }
 

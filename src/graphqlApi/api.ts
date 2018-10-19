@@ -1,6 +1,6 @@
 import * as Model from "../modelProviderBase";
 import { SchemaRoot, Query, InputObjectType, InputField, registerEnum, compileSchema } from "typegql";
-import { GraphQLSchema, GraphQLInt } from "graphql";
+import { GraphQLSchema } from "graphql";
 import { patchGraphQL } from "./patch";
 import { trace } from "../utils";
 
@@ -23,9 +23,10 @@ let model: Model.ModelProviderBase;
 @SchemaRoot()
 class ApiSchema {
 
-    @Query({ type: () => GraphQLInt })
-    getState(): Model.State {
-        return model.getState();
+    @Query()
+    getState(): string {
+        const state = model.getState();
+        return Model.State[state];
     }
 
     @Query()
@@ -45,7 +46,7 @@ class ApiSchema {
         const inObj = JSON.parse(inStr);
         trace("ESTIMATE inObj: ", inObj);
 
-        if (!(inObj instanceof Array)) {
+        if (!inObj || !(inObj instanceof Array)) {
             throw new Error("Invalid input");
         }
 

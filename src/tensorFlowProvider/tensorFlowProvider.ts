@@ -68,7 +68,7 @@ export class TensorFlowProvider extends ModelProviderBase {
         const ys = tf.tensor1d(yArr);
         trace("TRAIN 3 xs:", xs, "\nys:", ys);
 
-        const epochs = 500; /* should be 500 for good results*/
+        const epochs = 100; /* should be 500 for good results but for this demo we take rough aproximation... :-) */
         const rc = await this.model.fit(xs, ys, { epochs });
 
         const lastLoss = Number(rc.history.loss[rc.epoch.length - 1]);

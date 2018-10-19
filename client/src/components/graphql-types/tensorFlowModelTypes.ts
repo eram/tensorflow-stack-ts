@@ -5,7 +5,7 @@ export const endpoint = process.env.REACT_APP_ENDPOINT || "http://localhost:8080
 export const getNameStateQuery = `{ getName getState }`;
 export interface IGetNameStateResp {
     getName: string;
-    getState: number;
+    getState: string;
 }
 
 export const predictQuery = `

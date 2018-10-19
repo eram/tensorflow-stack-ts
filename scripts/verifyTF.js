@@ -1,5 +1,5 @@
 /*
- * This file is a little app to test tha TensorFlow.js in properly installed.
+ * This file is a little app to test that TensorFlow.js is properly installed.
  *
  * Run it with
  * > node verifyTF
