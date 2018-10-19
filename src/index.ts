@@ -4,7 +4,7 @@ import { isBuffer } from "util";
 import * as Dotenv from "dotenv";
 import dotevExpand from "dotenv-expand";
 import * as App from "./app";
-import { healthcheckRequest } from "./middleware/healthchek";
+import { healthcheckRequest } from "./middleware/healthcheck";
 import { IndexSig } from "./utils";
 import * as GqlApi from "./graphqlApi";
 import * as Model from "./tensorFlowProvider";
@@ -52,8 +52,8 @@ async function main(argv: string[]): Promise<number> {
         return 2;
     }
 
-    appGlobals.dev = process.env.NODE_ENV !== "production";
-    console.log(`version: ${appGlobals.version} production: ${!appGlobals.dev}`);
+    appGlobals.prod = process.env.NODE_ENV === "production";
+    console.log(`version: ${appGlobals.version} production: ${appGlobals.prod}`);
 
     // setup model
     const model = appGlobals.model = Model.getModelProvider();
@@ -71,7 +71,7 @@ async function main(argv: string[]): Promise<number> {
     }
 
     // setup GraphQL API
-    const schema = appGlobals.schema = GqlApi.initApi(model);
+    appGlobals.schema = GqlApi.initApi(model);
 
     // setup Koa
     const routes: App.IRoute[] = [
@@ -84,8 +84,8 @@ async function main(argv: string[]): Promise<number> {
             method: ["get", "post"],
             path: process.env.ROUTER_GRAPHQL || "/graphql",
             handler: graphqlHTTP({
-                schema,
-                graphiql: appGlobals.dev,
+                schema: appGlobals.schema,
+                graphiql: !appGlobals.prod,
             }),
         },
     ];

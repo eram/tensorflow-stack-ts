@@ -1,9 +1,11 @@
 /*
- * trace function is void by default but can be overriden in tests with a code
- * like this:
- *
- * // tslint:disable-next-line:no-var-requires no-require-imports no-unsafe-any
- * require("../utils").trace = console.log;
+ * trace function is a null function by default but it can an be assigned to console.log or something.
  */
-// tslint:disable-next-line:no-any variable-name
-export const trace = (_message ?: any, ..._optionalParams: any[]) => void 0;
+
+// tslint:disable-next-line:no-any
+type fnT = (message?: any, ...optionalParams: any[]) => void;
+
+export let trace: fnT = () => { /* */ };
+export function setTrace(fn: fnT) {
+    trace = fn;
+}

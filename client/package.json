@@ -1,6 +1,6 @@
 {
-  "name": "test1",
-  "version": "0.1.0",
+  "name": "tensorflow-stack-ts-client-side",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "start": "react-app-rewired start --scripts-version react-scripts-ts",

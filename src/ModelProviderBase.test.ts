@@ -37,7 +37,7 @@ describe("ModelProviderBase class", async () => {
         expect(await provider.compile()).toBeTruthy();
         expect(provider.getState()).toEqual(State.compiled);
 
-        expect(await provider.predict([one])).toStrictEqual([one]);
+        expect(await provider.predict([one])).toEqual([one]);
         await provider.fini();
         expect(provider.getState()).toEqual(State.unintialized);
     });
@@ -49,7 +49,7 @@ describe("ModelProviderBase class", async () => {
 
         expect(await provider.init(".")).toBeTruthy();
         expect(provider.getState()).toEqual(State.compiled);
-        expect(await provider.predict([one])).toStrictEqual([one]);
+        expect(await provider.predict([one])).toEqual([one]);
         await provider.fini();
         expect(provider.getState()).toEqual(State.unintialized);
     });

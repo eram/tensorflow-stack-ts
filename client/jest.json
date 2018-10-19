@@ -3,7 +3,7 @@
       "^.+\\.tsx?$": "ts-jest"
   },
   "rootDir": "./",
-  "testMatch": [ "**/__tests__/*.{jsx,tsx,js,ts}", "**/*.{test,spec}.{jsx,tsx,js,ts}q" ],
+  "testMatch": [ "**/__tests__/*.{jsx,tsx,js,ts}", "**/*.{test,spec}.{jsx,tsx,js,ts}" ],
   "testPathIgnorePatterns": ["/lib/", "/node_modules/", "<rootDir>/build/"],
   "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
   "collectCoverage": false,

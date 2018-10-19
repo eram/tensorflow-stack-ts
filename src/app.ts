@@ -38,7 +38,7 @@ export function main(routes: IRoute[]): Koa {
         .use(responseTimeHandler)
         .use(cors());
 
-    if (!getAppGlobals().dev) {
+    if (getAppGlobals().prod) {
         app.use(compress());
     }
 

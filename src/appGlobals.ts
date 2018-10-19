@@ -4,8 +4,8 @@ import * as Http from "http";
 
 
 export class AppGlobals {
-    public version = "unknown"; // to be read from package.json.version
-    public dev = true;
+    public version = "unknown";     // to be read from package.json.version
+    public prod = true;             // production env by default!
     public stats = {
         messages: 0,
         exceptions: 0,

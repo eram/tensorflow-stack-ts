@@ -1,15 +1,15 @@
 {
     "name": "tensorflow-stack-ts",
-    "version": "0.4.0",
+    "version": "1.0.0",
     "description": "tensortflow.js full-stack starter kit",
     "scripts": {
-        "build": "npm run build:prod",
         "start": "concurrently \"npm run server\" \"npm run client\"",
         "client": "cd client && npm start",
         "server": "npm run build:live",
+        "build": "npm run build:prod",
         "build:debug": "tsc -p ./tsconfig.test.json --pretty",
         "build:prod": "tsc -p ./tsconfig.prod.json --pretty",
-        "build:live": "nodemon -w ./src --exec ts-node --project ./tsconfig.test.json --pretty ./src/index.ts",
+        "build:live": "nodemon -w src -e ts,js,json -x ts-node --project ./tsconfig.test.json --pretty ./src/index.ts",
         "test": "npm run test:cover",
         "test:cover": "jest --coverage --no-cache --config ./jest.json",
         "test:nocover": "jest --config ./jest.json",
@@ -34,7 +34,8 @@
         "tensorflow.js",
         "graphql",
         "typescript",
-        "react"
+        "react.js",
+        "node.js"
     ],
     "dependencies": {
         "@koa/cors": "^2.2.2",
@@ -71,11 +72,11 @@
         "@types/node": "^8.10.36",
         "@types/supertest": "^2.0.6",
         "concurrently": "^4.0.1",
-        "jest": "^23.6.0",
+        "jest": "^20.0.4",
         "nodemon": "^1.18.4",
         "rimraf": "^2.6.2",
         "supertest": "^3.3.0",
-        "ts-jest": "^23.10.4",
+        "ts-jest": "^20.0.14",
         "ts-node": "^7.0.1",
         "tslint": "^5.11.0",
         "typescript": "^2.9.2"

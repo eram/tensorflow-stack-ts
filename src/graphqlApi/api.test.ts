@@ -5,10 +5,9 @@ import { GraphQLSchema, GraphQLError } from "graphql";
 import { patchGraphQL } from "./patch";
 import { getAppGlobals } from "../appGlobals";
 import { healthcheck } from "./apiHealthcheck";
+import { setTrace } from "../utils";
 
-// tslint:disable-next-line:no-var-requires no-require-imports no-unsafe-any
-require("../utils").trace = console.log;
-
+setTrace(console.log);
 
 // tslint:disable-next-line:interface-name
 interface ExecutionResult<T> {

@@ -20,21 +20,23 @@ interface IgetType {
 
 const appGlobals = getAppGlobals();
 
-export async function healthcheck(): Promise<{ ok: boolean, msg: string }> {
-    const rc = { ok: false, msg: "GraphQL API error" };
+export async function healthcheck(): Promise<{ ok: boolean, msg: {} }> {
+    const rc = { ok: false, msg: {} };
+    rc.msg = { error: "GraphQL API error" };
 
     if (appGlobals.schema) {
 
         const response = await graphqlFn<IgetType>(appGlobals.schema!, "{ getState getName }");
 
-        if (!!response && response.errors) {
-                rc.msg = response.errors[0].message ;
-
-        } else if (!!response && response.data && typeof response.data.getState === "string"
+        // positive path only!
+        if (!!response && response.data && typeof response.data.getState === "string"
         && typeof response.data.getName === "string") {
 
             rc.ok = response.data.getState !== Model.State[Model.State.error] ;
-            rc.msg = `provider=${response.data.getName} state=${response.data.getState}`;
+            rc.msg = {
+                provider: response.data.getName,
+                state: response.data.getState,
+            };
         }
     }
 

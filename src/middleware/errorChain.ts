@@ -62,7 +62,7 @@ export function onCtxError(this: Koa.Context, err: HttpErrors.HttpError) {
     }
 
     // on dev we respond with the full error details
-    if (appGlobals.dev) {
+    if (!appGlobals.prod) {
         this.body = JSON.stringify({
             error: err.message,
             stack: err.stack,

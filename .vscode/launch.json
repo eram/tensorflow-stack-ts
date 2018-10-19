@@ -27,21 +27,20 @@
             }
         },
         {
-            "name": "Jest all",
+            "name": "Jest all cover watch",
             "type": "node",
             "request": "launch",
-            "runtimeArgs": [
-                "--inspect-brk",
-                "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": [
+                "-i",
                 "--runInBand",
-                // "--coverage",
+                "--coverage",
+                "--watch",
                 "--config",
-                "${workspaceRoot}/jest.json"
-            ],
+                "${workspaceFolder}/jest.json",
+            ],            
             "console": "externalTerminal",
-            "internalConsoleOptions": "neverOpen",
             "sourceMaps": true,
-            "port": 9229,
             "env": {
                 "TS_NODE_PROJECT": "./tsconfig.test.json",
             }
@@ -50,19 +49,16 @@
             "type": "node",
             "request": "launch",
             "name": "Jest here",
-            "runtimeArgs": [
-                "--inspect-brk",
-                "${workspaceRoot}/node_modules/jest/bin/jest.js",
+            "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+            "args": [
+                "-i",
                 "--runInBand",
-                // "--detectOpenHandles",
-                // "--coverage",
                 "--config",
-                "${workspaceRoot}/jest.json",
+                "${workspaceFolderw}/jest.json",
                 "${relativeFile}"
-            ],
+            ],            
             "console": "externalTerminal",
             "sourceMaps": true,
-            "port": 9229,
             "env": {
                 "TS_NODE_PROJECT": "./tsconfig.test.json",
             }

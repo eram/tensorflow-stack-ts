@@ -1,4 +1,3 @@
-// tslint:disable:mocha-no-side-effect-code
 import * as Koa from "koa";
 import { IRoute, RouterHandler, main, appendError } from "./app";
 import { Server } from "http";
@@ -83,7 +82,7 @@ describe("setup koa server", () => {
 
         let res = await agent.get(routes[0].path);
         expect(res.status).toEqual(200);
-        expect(makeError).toBeCalledTimes(1);
+        expect(makeError).toBeCalled();
 
         res = await agent.get("/notFound");
         expect(res.status).toEqual(404);
@@ -93,7 +92,7 @@ describe("setup koa server", () => {
 
         const res = await agent.get(routes[1].path);
         expect(res.status).toEqual(500);
-        expect(throwFn).toBeCalledTimes(1);
+        expect(throwFn).toBeCalled();
     });
 
     test("long request", async () => {
@@ -101,13 +100,7 @@ describe("setup koa server", () => {
         const res = await agent.get(routes[2].path);
         expect(res.status).toEqual(200);
         expect(res.get("x-response-time")).not.toBeUndefined();
-        expect(longFn).toBeCalledTimes(1);
+        expect(longFn).toBeCalled();
     });
 
-    test("break server", async () => {
-
-        const res = await agent.get(routes[3].path);
-        expect(res.status).toEqual(500);
-        expect(breakFn).toBeCalledTimes(1);
-    });
 });
