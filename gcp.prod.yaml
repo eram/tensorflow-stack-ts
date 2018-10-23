@@ -5,6 +5,7 @@ runtime: nodejs8
 env_variables:
   PUBLIC_URL: "tensorflow-stack-ts.appspot.com"
   HTTPS: false
+  NODE_OPTIONS: "--max-old-space-size=256"
   ROUTER_APP: "/stack"
   ROUTER_MAIN_API:  "/api"
   ROUTER_HEALTHCHECK:  "/api/_healthcheck"
@@ -21,3 +22,11 @@ env_variables:
 
 inbound_services:
   - warmup
+
+handlers:
+- url: /.*
+  secure: never
+  redirect_http_response_code: 301
+  script: auto
+
+instance_class: F2

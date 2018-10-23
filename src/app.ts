@@ -44,7 +44,7 @@ export function main(routes: IRoute[]): Koa {
 
     // serve static site
     let p = process.env.ROUTER_STATIC_FOLDER || "";
-    p = (p.indexOf("\\") > 0 || p.indexOf("/") > 0) ? p : path.join(__dirname, "../", p);
+    p = (p.indexOf("\\") > 0 || p.indexOf("/") > 0) ? p : path.join(process.cwd(), "/", p);
     app.use(serve(p, { defer: false, gzip: true }));
     console.log(`static site: / => ${p}`);
 

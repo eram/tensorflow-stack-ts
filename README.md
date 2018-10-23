@@ -64,7 +64,7 @@ The repo is divided into a server-side (backend) project and a client-side (fron
 > git clone https://github.com/eram/tensorflow-stack-ts.git stack
 > cd stack
 > npm install 
-> npm start
+> npm build:live
 > cd client
 > npm install
 > npm start
