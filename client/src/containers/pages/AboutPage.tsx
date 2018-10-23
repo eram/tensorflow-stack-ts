@@ -12,8 +12,9 @@ export class AboutPage extends React.Component<{}, {}> {
         </div>
         <p className="about-intro">
           App version: {process.env.REACT_APP_VERSION}<br />
-          GraphQL endpoint: <a href={`${process.env.REACT_APP_ENDPOINT}?query={%0A%20 getName%0A}%0A`}>
-            {process.env.REACT_APP_ENDPOINT}</a><br />
+          <a href={`${process.env.REACT_APP_ENDPOINT}`}>GraphQL endpoint</a><br />
+          <a href={`${process.env.REACT_APP_HEALTHCHECK}`}>Service Healthcheck</a><br />
+          <a href="https://github.com/eram/tensorflow-stack-ts">Project Github</a><br />
           To get started, edit <code>src/containers/pages/AboutPage.tsx</code> and in a few seconds it reloads.
         </p>
         <Rate character="6" />

@@ -1,15 +1,23 @@
 /node_modules
-/client
 /src
-/build/reports
-/build/debug
+/scripts
 .env
+.vscode
+ts*.json
+
+/client/node_modules
+/client/.vscode
+/client/*.json
+/client/src
+/client/public
+/client/*.ts
 
 # testing
+/build/reports
+/build/debug
 /coverage
 /.vscode/chrome
 /client/coverage
-/client/.vscode/chrome
 *.dead
 /client.bak
 

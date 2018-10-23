@@ -21,23 +21,27 @@ async function main(argv: string[]): Promise<number> {
     setProcessHandelers(appGlobals);
     console.log("argv:", argv);
 
-    // get config from environment: use "--resolve" to set the .env file
-    let env = Dotenv.config();
-    if (env.error) {
-        console.warn(".env file failed to load. using default .debug.env");
-        const fileName = path.resolve(process.cwd(), "./.debug.env");
-        env = Dotenv.config({ path: fileName });
+    if (!process.env.ROUTER_APP || !process.env.PORT) {
+
+        // get config from environment: use "--resolve" to set the .env file
+        console.log("loading env from .env", argv);
+        let env = Dotenv.config();
+        if (env.error) {
+            console.warn(".env load failed. loading .debug.env");
+            const fileName = path.resolve(process.cwd(), ".debug.env");
+            env = Dotenv.config({ path: fileName });
+        }
+        dotevExpand(env);
     }
 
-    if (env.error || !process.env.ROUTER_APP || !process.env.PORT) {
+    if (!process.env.ROUTER_APP || !process.env.PORT) {
         console.error(`failed to load environment`);
         return 2;
     }
 
-    dotevExpand(env);
     console.log("env loded:", process.env);
 
-    // get version from package.conf
+    // get version from package.json
     const p = path.resolve(process.cwd(), "./package.json");
     try {
         const buf = fs.readFileSync(p);

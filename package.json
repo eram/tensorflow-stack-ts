@@ -1,24 +1,24 @@
 {
     "name": "tensorflow-stack-ts",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "tensortflow.js full-stack starter kit",
     "scripts": {
         "start": "node ./build/dist/src",
         "dev": "concurrently \"npm run dev server\" \"npm run dev client\"",
         "dev client": "cd client && npm start",
         "dev server": "npm run build:live",
-        "build": "npm run build:prod",
+        "build": "tsc -p ./tsconfig.prod.json --pretty",
         "build:debug": "tsc -p ./tsconfig.test.json --pretty",
-        "build:prod": "tsc -p ./tsconfig.prod.json --pretty",
         "build:live": "nodemon -w src -e ts,js,json -x ts-node --project ./tsconfig.test.json --pretty ./src/index.ts",
         "test": "npm run test:cover",
         "test:cover": "jest --coverage --no-cache",
         "test:nocover": "jest",
         "test:watch": "jest --watch",
-        "clean": "rimraf ./build",
+        "clean": "rimraf ./build ./client/build",
         "clean:caches": "npm cache clean --force && jest --clearCache",
         "pretest": "npm run clean && npm run lint && npm run build",
-        "lint": "tslint --format stylish --project ./tsconfig.json"
+        "lint": "tslint --format stylish --project ./tsconfig.json",
+        "deploy": "start scripts\\deploy"
     },
     "repository": {
         "type": "git",
@@ -26,7 +26,7 @@
     },
     "homepage": "https://github.com/eram/tensorflow-stack-ts#readme",
     "main": "./build/dist/index.js",
-    "typings": "./build/dist/index.d.ts",
+    "typings": "./build/dist/src/index.d.ts",
     "license": "ISC",
     "bugs": {
         "url": "https://github.com/eram/tensorflow-stack-ts/issues"

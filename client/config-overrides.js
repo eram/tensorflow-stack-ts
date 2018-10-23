@@ -27,10 +27,12 @@ module.exports = function override(config, env) {
         },
     })(config, env);
 
-    // take .env from parent folder
-    // this better be done after ejecting with a cmd like this:
-    // $ node -r dotenv/config your_script.js dotenv_config_path=/custom/path/to/your/env/vars
-    config = appendDotenv(config);
+    if (!process.env.REACT_APP_ENDPOINT) {
+        // take .env from parent folder
+        // this better be done after ejecting with a cmd like this:
+        // $ node -r dotenv/config your_script.js dotenv_config_path=/custom/path/to/your/env/vars
+        config = appendDotenv(config);
+    }
 
     log(JSON.stringify(config, null, 1));
     return config;

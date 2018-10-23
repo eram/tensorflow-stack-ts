@@ -104,7 +104,7 @@ function printRoutes(router: joiRouter.Router, prefix?: string) {
         if ( spec && spec.handler && spec.handler instanceof Array && spec.handler[0].prototype) {
             name = spec.handler[0].name;
         }
-        output.push(`${name}: ${spec.path} validation=${spec.validate ? "exists" : "missing"}`);
+        output.push(`${name}: ${spec.path} validation: ${spec.validate ? "exists" : "none"}`);
     });
     console.log("Router setup:\n", `prefix: ${prefix}`, output);
 }
