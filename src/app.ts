@@ -45,7 +45,7 @@ export function main(routes: IRoute[]): Koa {
     // serve static site
     let p = process.env.ROUTER_STATIC_FOLDER || "";
     p = (p.indexOf("\\") > 0 || p.indexOf("/") > 0) ? p : path.join(process.cwd(), "/", p);
-    app.use(serve(p, { defer: false, gzip: true }));
+    app.use(serve(p, { defer: false, gzip: false })); // gcp would gzip
     console.log(`static site: / => ${p}`);
 
     /* TODO
