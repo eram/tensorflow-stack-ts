@@ -29,7 +29,7 @@ async function main(argv: string[]): Promise<number> {
         env = Dotenv.config({ path: fileName });
     }
 
-    if (env.error || !process.env.ROUTER_APP || !process.env.SRV_PORT) {
+    if (env.error || !process.env.ROUTER_APP || !process.env.PORT) {
         console.error(`failed to load environment`);
         return 2;
     }
@@ -92,13 +92,13 @@ async function main(argv: string[]): Promise<number> {
 
     // go!
     const server = App.main(routes);
-    appGlobals.server = server.listen(process.env.SRV_PORT);
+    appGlobals.server = server.listen(process.env.PORT);
     if (!appGlobals.server.listening) {
-        console.error(`failed to start server on port ${process.env.SRV_PORT}`);
+        console.error(`failed to start server on port ${process.env.PORT}`);
         return 3;
     }
 
-    console.log(`Server started on port ${process.env.SRV_PORT}`);
+    console.log(`Server started on port ${process.env.PORT}`);
     return 0;
 }
 

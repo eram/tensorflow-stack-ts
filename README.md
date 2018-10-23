@@ -4,11 +4,11 @@ TensorFlow.js Full-Stack Starter Kit
 ![TensorFlow.js Full-Stack Starter Kit](public/img/tensorflow-stack-ts-tagline.png)
 
 ## Motivation 
-Coming to work on an AI project there are [lots of things to consider](https://www.slideshare.net/ethanram/why-so-many-data-science-projects-fail-112757707), and getting some proof-of-concept going with a bunch of tools is the way to go. But once this phase of the project is over you want to develop an application or even just a testbed to work on. You need an applicative environment to develop on. Recently, when I tried setting up an application stack for an AI/TensoFlow based project, I found that the MEAN-based templates I used in the past are way behind and do not fully integrate the latest technologies. So I decided to put together the libraries I found working for me, as a new full-stack template. 
+Coming to work on an AI project there are [lots of things to consider](https://www.slideshare.net/ethanram/why-so-many-data-science-projects-fail-112757707), and getting some proof-of-concept going with a bunch of tools is the way to go. But once this phase of the project is over you want to develop an application or even just a testbed to work on. You need an applicative environment to develop on. Recently, when I tried setting up an application stack for an AI/TensoFlow based project, I found that the [MEAN](http://mean.io/)-based templates I used in the past are way behind and do not fully integrate the latest technologies. So I decided to put together the libraries I found working for me, as a new full-stack template. 
 
 ## Use cases?
-Google's TensorFlow is run here inside a NodeJS environment - V8 single-threaded Javascript engine that is HW-accelerated with eighter WebGL or CUDA binaries. It seems that training a large-complex model on this environment is a no-go, even on a strong machine. But using it to explore a model, visualize and adjust it's parameters is a good candidate. A more reasonable direction is to take a large model built elsewhere and use this backend to serve clients' requests. It's easy to run such an app on the cloud/k8s and scale it as needed.  
-Regardless of the AI engine here, this is a nicely integrated set of libraries and a modern developement environment to jumpstart any web/mobile/native.
+Google's TensorFlow is run here inside a NodeJS environment - V8 single-threaded Javascript engine that is HW-accelerated with eighter WebGL or CUDA binaries. It seems that training a large-complex model on this environment is a no-go, even on a strong machine. But (1) using it to explore a model, visualize and adjust it's parameters is a good candidate. A more reasonable direction is to (2) take a large model built elsewhere, [convert it](https://github.com/tensorflow/tfjs-converter), and use this backend to serve clients' requests. It's easy to run such an app on the cloud/K8S and scale it horizontally.  
+Regardless of the AI engine here, this is a (3) nicely integrated set of libraries and a modern developement environment to jumpstart any web/mobile/native project.
 
 ## What's in the box?
 A well integrated, full-stack working sample:
@@ -17,7 +17,7 @@ A well integrated, full-stack working sample:
 - One coding language across the stack - TypeScript/Javascript fully ES6 with async/await across all code.
 - Latest APIs based on a GraphQL schema.
 - Modern dev tools with hot-reload on changes, linting, unit testing, and code coverage reports. Well integrated into VSCode as an IDE and debugger.
-- [Keep it simple philosophy across](https://www.slideshare.net/ethanram/kissts-the-keep-it-simple-software-stack-for-2017-82329212)! I've saved a ton of learning-curve time by **not** a bunch of libs that I found old-fashioned or cumbersome: Redux, Apollo server/client, Enzym, REST, yarn, Babel, Winston/Bunyan, Relay... 
+- [Keep it simple philosophy across](https://www.slideshare.net/ethanram/kissts-the-keep-it-simple-software-stack-for-2017-82329212)! I've saved a ton of learning-curve time by **not** including a bunch of libs that I found old-fashioned or cumbersome: Redux, Apollo server/client, Enzym, REST, yarn, Babel, Winston/Bunyan, Relay... 
 - As a bonus, you get the trivial Todo application integrated here as well. So this can work for you "even" if this is not an AI-based project.
 
 ![TensorFlow-Stack-TS - Kickstart Your AI Project - TensorFlow.js Full-Stack Starter Kit](public/img/screenshot1.png)
@@ -64,7 +64,7 @@ The repo is divided into a server-side (backend) project and a client-side (fron
 > git clone https://github.com/eram/tensorflow-stack-ts.git stack
 > cd stack
 > npm install 
-> npm run server
+> npm start
 > cd client
 > npm install
 > npm start

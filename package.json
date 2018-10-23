@@ -1,11 +1,12 @@
 {
     "name": "tensorflow-stack-ts",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "tensortflow.js full-stack starter kit",
     "scripts": {
-        "start": "concurrently \"npm run server\" \"npm run client\"",
-        "client": "cd client && npm start",
-        "server": "npm run build:live",
+        "start": "ts-node --project ./tsconfig.prod.json --pretty ./src/index.ts",
+        "dev": "concurrently \"npm run dev server\" \"npm run dev client\"",
+        "dev client": "cd client && npm start",
+        "dev server": "npm run build:live",
         "build": "npm run build:prod",
         "build:debug": "tsc -p ./tsconfig.test.json --pretty",
         "build:prod": "tsc -p ./tsconfig.prod.json --pretty",
@@ -54,13 +55,15 @@
         "koa-joi-router": "^5.1.0",
         "koa-static": "^5.0.0",
         "koa-useragent": "^1.1.0",
-        "typegql": "^0.6.0"
+        "typegql": "^0.6.0",
+        "ts-node": "^7.0.1",
+        "typescript": "^2.9.2"
     },
     "devDependencies": {
         "@types/dotenv": "^4.0.3",
         "@types/graphql": "0.13.2",
         "@types/http-errors": "^1.6.1",
-        "@types/jest": "^23.3.5",
+        "@types/jest": "^20.0.8",
         "@types/joi": "^13.4.5",
         "@types/koa": "^2.0.46",
         "@types/koa-bodyparser": "^5.0.1",
@@ -77,8 +80,6 @@
         "rimraf": "^2.6.2",
         "supertest": "^3.3.0",
         "ts-jest": "^20.0.14",
-        "ts-node": "^7.0.1",
-        "tslint": "^5.11.0",
-        "typescript": "^2.9.2"
+        "tslint": "^5.11.0"
     }
 }

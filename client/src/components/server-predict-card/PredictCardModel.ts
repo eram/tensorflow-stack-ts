@@ -75,30 +75,35 @@ class PredictCardModel {
         let newState: Partial<ICompState> = {};
 
         do {
-            const xs = JSON.parse(tfInput) as Array<[number]>;
+            const xs = JSON.parse(tfInput) as [{}];
 
-            if (!xs || !(xs instanceof Array) || xs.length !== 1 || !(xs[0] instanceof Array) || xs[0].length < 1) {
-                newState = { errStr: "Invalid: input must be one dim array" };
+            if (!xs || !(xs instanceof Array) || !xs.length) {
+                newState = { errStr: "Invalid: input must an array" };
                 break;
             }
 
-            const ys = JSON.parse(tfOutput) as number[][];
-            if (!ys || !(ys instanceof Array) || ys.length !== 1 || !(ys[0] instanceof Array) || ys[0].length < 1) {
-                newState = { errStr: "Invalid: prediction must be one dim array" };
+            const ys = JSON.parse(tfOutput) as [{}];
+            if (!ys || !(ys instanceof Array) || !ys.length) {
+                newState = { errStr: "Invalid: prediction must an array" };
                 break;
             }
 
-            const xArr = xs[0];
-            const yArr = ys[0];
+            //
+            // this part is specific to an x=>y numerical graph
+            //
+            if (xs[0] instanceof Array && ys[0] instanceof Array) {
+                const xArr = xs[0];
+                const yArr = ys[0];
 
-            if (xArr.length !== yArr.length) {
-                newState = { errStr: "Invalid: prediction is different in size from input" };
-                break;
+                if (xArr.length !== yArr.length) {
+                    newState = { errStr: "Invalid: prediction is different in size from input" };
+                    break;
+                }
+
+                xArr.forEach((x, idx) => {
+                    graphData.push({ input: xArr[idx], output: yArr[idx] });
+                });
             }
-
-            xArr.forEach((x, idx) => {
-                graphData.push({ input: xArr[idx], output: yArr[idx] });
-            });
 
             newState.graphData = graphData;
         } while (0);

@@ -8,7 +8,7 @@
     "test": "react-app-rewired test --coverage --env=jsdom --scripts-version react-scripts-ts",
     "eject": "react-scripts-ts eject",
     "lint": "tslint -c tslint.json 'src/**/*.{ts,tsx}'",
-    "clean": "rimraf build"
+    "clean": "rimraf ./build ./coverage"
   },
   "dependencies": {
     "antd": "^3.10.1",
