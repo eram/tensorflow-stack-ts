@@ -1,107 +1,126 @@
 {
-    "name": "tensorflow-stack-ts",
-    "version": "1.0.2",
-    "description": "tensortflow.js full-stack starter kit",
-    "scripts": {
-        "start": "node ./build/dist/src",
-        "dev": "concurrently \"npm run dev server\" \"npm run dev client\"",
-        "dev client": "cd client && npm start",
-        "dev server": "npm run build:live",
-        "build": "tsc -p ./tsconfig.prod.json --pretty",
-        "build:debug": "tsc -p ./tsconfig.test.json --pretty",
-        "build:live": "nodemon -w src -e ts,js,json -x ts-node --project ./tsconfig.test.json --pretty ./src/index.ts",
-        "test": "npm run test:cover",
-        "test:cover": "jest --coverage --no-cache",
-        "test:nocover": "jest",
-        "test:watch": "jest --watch",
-        "clean": "rimraf ./build ./client/build",
-        "clean:caches": "npm cache clean --force && jest --clearCache",
-        "pretest": "npm run clean && npm run lint && npm run build",
-        "lint": "tslint --format stylish --project ./tsconfig.json",
-        "deploy": "scripts\\deploy"
+  "name": "tensorflow-stack-ts",
+  "version": "1.0.4",
+  "description": "tensortflow.js full-stack starter kit",
+  "scripts": {
+    "start": "node ./build/dist/src",
+    "dev": "concurrently \"npm run dev server\" \"npm run dev client\"",
+    "dev client": "cd client && npm start",
+    "dev server": "npm run build:live",
+    "build": "tsc -p ./tsconfig.prod.json --pretty",
+    "build:debug": "tsc -p ./tsconfig.test.json --pretty",
+    "build:live": "nodemon -w src -e ts,js,json -x ts-node --project ./tsconfig.test.json --pretty ./src/index.ts",
+    "test": "npm run test:cover",
+    "test:cover": "jest --coverage --no-cache",
+    "test:nocover": "jest",
+    "test:watch": "jest --watch",
+    "clean": "rimraf ./build ./client/build",
+    "clean:caches": "npm cache clean --force && jest --clearCache",
+    "pretest": "npm run clean && npm run lint && npm run build",
+    "lint": "tslint --format stylish --project ./tsconfig.json",
+    "deploy": "scripts\\deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eram/tensorflow-stack-ts.git"
+  },
+  "homepage": "https://github.com/eram/tensorflow-stack-ts#readme",
+  "main": "./build/dist/index.js",
+  "typings": "./build/dist/src/index.d.ts",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/eram/tensorflow-stack-ts/issues"
+  },
+  "keywords": [
+    "tensorflow.js",
+    "graphql",
+    "typescript",
+    "react.js",
+    "node.js"
+  ],
+  "dependencies": {
+    "@koa/cors": "^2.2.2",
+    "@tensorflow/tfjs": "^0.13.1",
+    "dotenv": "^6.1.0",
+    "dotenv-expand": "^4.2.0",
+    "freeze-mutate": "^1.1.2",
+    "graphql": "0.13.2",
+    "http-error-codes": "^1.0.1",
+    "koa": "^2.5.3",
+    "koa-bodyparser": "^4.2.1",
+    "koa-compose": "^4.1.0",
+    "koa-compress": "^3.0.0",
+    "koa-errors": "^1.0.1",
+    "koa-graphql": "^0.7.5",
+    "koa-joi-router": "^5.1.0",
+    "koa-static": "^5.0.0",
+    "koa-useragent": "^1.1.0",
+    "rimraf": "^2.6.2",
+    "typegql": "^0.6.0",
+    "typescript": "^2.9.2"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^4.0.3",
+    "@types/graphql": "0.13.2",
+    "@types/http-errors": "^1.6.1",
+    "@types/jest": "^20.0.8",
+    "@types/joi": "^13.4.5",
+    "@types/koa": "^2.0.46",
+    "@types/koa-bodyparser": "^5.0.1",
+    "@types/koa-compose": "^3.2.2",
+    "@types/koa-compress": "^2.0.8",
+    "@types/koa-joi-router": "^5.0.3",
+    "@types/koa-static": "^4.0.0",
+    "@types/koa__cors": "^2.2.3",
+    "@types/node": "^8.10.36",
+    "@types/supertest": "^2.0.6",
+    "concurrently": "^4.0.1",
+    "jest": "^20.0.4",
+    "nodemon": "^1.18.4",
+    "supertest": "^3.3.0",
+    "ts-jest": "^20.0.14",
+    "ts-node": "^7.0.1",
+    "tslint": "^5.11.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "./node_modules/ts-jest/preprocessor.js"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/eram/tensorflow-stack-ts.git"
-    },
-    "homepage": "https://github.com/eram/tensorflow-stack-ts#readme",
-    "main": "./build/dist/index.js",
-    "typings": "./build/dist/src/index.d.ts",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/eram/tensorflow-stack-ts/issues"
-    },
-    "keywords": [
-        "tensorflow.js",
-        "graphql",
-        "typescript",
-        "react.js",
-        "node.js"
+    "testMatch": [
+      "**/__tests__/*.{jsx,tsx,js,ts}",
+      "**/*.{test,spec}.{jsx,tsx,js,ts}"
     ],
-    "dependencies": {
-        "@koa/cors": "^2.2.2",
-        "@tensorflow/tfjs": "^0.13.1",
-        "dotenv": "^6.1.0",
-        "dotenv-expand": "^4.2.0",
-        "freeze-mutate": "^1.1.2",
-        "graphql": "0.13.2",
-        "http-error-codes": "^1.0.1",
-        "koa": "^2.5.3",
-        "koa-bodyparser": "^4.2.1",
-        "koa-compose": "^4.1.0",
-        "koa-compress": "^3.0.0",
-        "koa-errors": "^1.0.1",
-        "koa-graphql": "^0.7.5",
-        "koa-joi-router": "^5.1.0",
-        "koa-static": "^5.0.0",
-        "koa-useragent": "^1.1.0",
-        "rimraf": "^2.6.2",
-        "typegql": "^0.6.0",
-        "typescript": "^2.9.2"
-    },
-    "devDependencies": {
-        "@types/dotenv": "^4.0.3",
-        "@types/graphql": "0.13.2",
-        "@types/http-errors": "^1.6.1",
-        "@types/jest": "^20.0.8",
-        "@types/joi": "^13.4.5",
-        "@types/koa": "^2.0.46",
-        "@types/koa-bodyparser": "^5.0.1",
-        "@types/koa-compose": "^3.2.2",
-        "@types/koa-compress": "^2.0.8",
-        "@types/koa-joi-router": "^5.0.3",
-        "@types/koa-static": "^4.0.0",
-        "@types/koa__cors": "^2.2.3",
-        "@types/node": "^8.10.36",
-        "@types/supertest": "^2.0.6",
-        "concurrently": "^4.0.1",
-        "jest": "^20.0.4",
-        "nodemon": "^1.18.4",
-        "supertest": "^3.3.0",
-        "ts-jest": "^20.0.14",
-        "ts-node": "^7.0.1",
-        "tslint": "^5.11.0"
-    },
-    "jest": {
-        "transform": {
-            "^.+\\.tsx?$": "./node_modules/ts-jest/preprocessor.js"
-        },
-        "testMatch": [ "**/__tests__/*.{jsx,tsx,js,ts}", "**/*.{test,spec}.{jsx,tsx,js,ts}" ],
-        "testPathIgnorePatterns": ["/lib/", "/node_modules/", "<rootDir>/build/", "<rootDir>/client/"],
-        "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
-        "collectCoverage": false,
-        "coverageDirectory": "<rootDir>/build/reports",
-        "collectCoverageFrom": [
-          "src/**/*.ts",
-          "!src/**/*.spec.ts",
-          "!src/**/*.d.ts",
-          "!src/**/index.ts",
-          "!src/**/*.test.*",
-          "!src/processOn.ts",
-          "!src/graphqlApi/patch.ts",
-          "!client/**"
-        ],
-        "coverageReporters": ["html", "lcov", "text"],
-        "testEnvironment": "node"
-      }    
+    "testPathIgnorePatterns": [
+      "/lib/",
+      "/node_modules/",
+      "<rootDir>/build/",
+      "<rootDir>/client/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "collectCoverage": false,
+    "coverageDirectory": "<rootDir>/build/reports",
+    "collectCoverageFrom": [
+      "src/**/*.ts",
+      "!src/**/*.spec.ts",
+      "!src/**/*.d.ts",
+      "!src/**/index.ts",
+      "!src/**/*.test.*",
+      "!src/processOn.ts",
+      "!src/graphqlApi/patch.ts",
+      "!client/**"
+    ],
+    "coverageReporters": [
+      "html",
+      "lcov",
+      "text"
+    ],
+    "testEnvironment": "node"
+  }
 }
