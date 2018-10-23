@@ -1,6 +1,6 @@
 @echo off
 
-npx npm-bump patch
+npx version-bump-prompt --patch --commit --tag --push
 if errorlevel 1 goto err
 
 node -p "require('./package.json').version" > %temp%\tmp-ver
