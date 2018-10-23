@@ -18,7 +18,7 @@
         "clean:caches": "npm cache clean --force && jest --clearCache",
         "pretest": "npm run clean && npm run lint && npm run build",
         "lint": "tslint --format stylish --project ./tsconfig.json",
-        "deploy": "start scripts\\deploy"
+        "deploy": "scripts\\deploy"
     },
     "repository": {
         "type": "git",
