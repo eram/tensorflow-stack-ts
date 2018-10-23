@@ -8,8 +8,9 @@ set /P REACT_APP_VERSION=<%temp%\tmp-ver
 del %temp%\tmp-ver
 echo REACT_APP_VERSION=%REACT_APP_VERSION%
 
-set REACT_APP_ENDPOINT=http://tensorflow-stack-ts.appspot.com/stack/api/graphql
-set REACT_APP_HEALTHCHECK=http://tensorflow-stack-ts.appspot.com/stack/api/_healthcheck
+set PUBLIC_URL=https://tensorflow-stack-ts.appspot.com
+set REACT_APP_ENDPOINT=%PUBLIC_URL%/stack/api/graphql
+set REACT_APP_HEALTHCHECK=%PUBLIC_URL%/stack/api/_healthcheck
 
 call npm run clean
 if errorlevel 1 goto err
@@ -26,7 +27,7 @@ call gcloud app deploy gcp.prod.yaml
 if errorlevel 1 goto err
 
 echo done ok
-call gcloud app browse
+start %PUBLIC_URL%
 exit 0
 
 :err

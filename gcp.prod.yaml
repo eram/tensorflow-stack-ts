@@ -3,7 +3,7 @@
 runtime: nodejs8
 
 env_variables:
-  PUBLIC_URL: "tensorflow-stack-ts.appspot.com"
+  PUBLIC_URL: "https://tensorflow-stack-ts.appspot.com"
   HTTPS: false
   NODE_OPTIONS: "--max-old-space-size=256"
   ROUTER_APP: "/stack"
