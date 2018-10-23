@@ -1,0 +1,23 @@
+# See https://help.github.com/ignore-files/ for more about ignoring files.
+
+/node_modules
+/client/node_modules
+
+/build
+/client/build
+
+# testing
+/coverage
+/.vscode/chrome
+/client/coverage
+/client/.vscode/chrome
+*.dead
+/client.bak
+
+# misc
+.DS_Store
+.env*.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

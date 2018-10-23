@@ -36,8 +36,6 @@
                 "--runInBand",
                 "--coverage",
                 "--watch",
-                "--config",
-                "${workspaceFolder}/jest.json",
             ],            
             "console": "externalTerminal",
             "sourceMaps": true,
@@ -53,8 +51,7 @@
             "args": [
                 "-i",
                 "--runInBand",
-                "--config",
-                "${workspaceFolderw}/jest.json",
+                // "--showConfig",
                 "${relativeFile}"
             ],            
             "console": "externalTerminal",

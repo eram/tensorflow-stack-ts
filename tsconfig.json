@@ -2,7 +2,7 @@
     "compilerOptions": {
         "baseUrl": ".",
         "outDir": "build/debug",
-        "module": "esnext",
+        "module": "commonjs",
         "target": "es6",
         "lib": ["dom", "esnext"],
         "allowJs": true,

@@ -1,0 +1,23 @@
+# google cloud platform deploy descriptor
+# deploys the main app service
+runtime: nodejs8
+
+env_variables:
+  PUBLIC_URL: "tensorflow-stack-ts.appspot.com"
+  HTTPS: false
+  ROUTER_APP: "/stack"
+  ROUTER_MAIN_API:  "/api"
+  ROUTER_HEALTHCHECK:  "/api/_healthcheck"
+  ROUTER_GRAPHQL: "/api/graphql"
+  ROUTER_STATIC_FOLDER: "public"
+  ROUTER_STATIC_PATH: "/stack"
+  ROUTER_MAX_RESPONSE_TIME: 200
+  # DATABASE
+  # DB_USER: "postgres"
+  # DB_HOST: "localhost"
+  # DB_DATABASE: "postgres"
+  # DB_PASSWORD: "postgres"
+  # DB_PORT: 5432
+
+inbound_services:
+  - warmup
