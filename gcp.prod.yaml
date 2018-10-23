@@ -25,7 +25,7 @@ inbound_services:
 
 handlers:
 - url: /.*
-  secure: never
+  secure: always
   redirect_http_response_code: 301
   script: auto
 
