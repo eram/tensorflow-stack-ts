@@ -57,17 +57,19 @@ function appendDotenv(config) {
     const env = myEnv.parsed || [];
     var found = 0;
 
-    // take all the REACT_APP_XXX and append into the definitions plugins.
-    // dont override existing keys
+    // build environment into config
     const plugin = config.plugins.find(p => p.definitions !== undefined && p.definitions["process.env"]);
-
     if (plugin) {
+
+        const pdefs = plugin.definitions["process.env"];
+
         for (var key in env) {
             if (key) {
 
+                // take all the REACT_APP_XXX and append into the definitions plugins.
                 if (key.indexOf("REACT_APP_") === 0) {
-                    if (!plugin.definitions["process.env"][key]) {
-                        plugin.definitions["process.env"][key] = JSON.stringify(env[key]);
+                    if (!pdefs[key]) {
+                        pdefs[key] = JSON.stringify(env[key]);
                     }
                     if (!process.env[key]) {
                         process.env[key] = env[key];
@@ -75,9 +77,20 @@ function appendDotenv(config) {
                     found++;
                 }
 
-                if (key.indexOf("REACT_APP_PORT" === 0)) {
+                // PUBLIC_URL is required for root of app
+                if (key.indexOf("PUBLIC_URL") === 0) {
+                    if (!pdefs[key] || pdefs[key].length < 4) {
+                        pdefs[key] = JSON.stringify(env[key]);
+                    }
+                    if (!process.env[key]) {
+                        process.env[key] = env[key];
+                    }
+                }
+
+                // PORT is the Webpack dev server port
+                if (key.indexOf("REACT_DEVSRV_PORT" === 0)) {
                     if (!process.env.PORT) {
-                        process.env.PORT = Number.parseInt(env.REACT_APP_PORT, 10);
+                        process.env.PORT = Number.parseInt(env.REACT_DEVSRV_PORT, 10);
                         log(`process.env.PORT: ${process.env.PORT}`);
                     }
                 }

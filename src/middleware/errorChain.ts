@@ -28,11 +28,11 @@ export async function errorChainHandler(ctx: Koa.Context, next: () => Promise<vo
             throw err2;
         }
 
-        errorChain.push(`exeption in middleware: ${err.message} ${ctx.href}`);
+        errorChain.push(`${ctx.href} exeption in middleware:${err.message} `);
     });
 
     if (ctx.status !== 200) {
-        errorChain.push(`${ctx.status} ${ctx.href} ${ctx.message}`);
+        errorChain.push(`${ctx.href} ${ctx.status}:${ctx.message}`);
     }
 
     if (errorChain.length) {

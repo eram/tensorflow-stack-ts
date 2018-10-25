@@ -39,10 +39,23 @@ exports[`AboutPage testing page is loading correctly 1`] = `
       >
         App version: 
         <br />
-        GraphQL endpoint: 
         <a
-          href="undefined?query={%0A%20 getName%0A}%0A"
-        />
+          href="undefined"
+        >
+          GraphQL endpoint
+        </a>
+        <br />
+        <a
+          href="undefined"
+        >
+          Service Healthcheck
+        </a>
+        <br />
+        <a
+          href="https://github.com/eram/tensorflow-stack-ts"
+        >
+          Project Github
+        </a>
         <br />
         To get started, edit 
         <code>

@@ -1,5 +1,4 @@
 import * as React from "react";
-// import { Redirect } from "react-router-dom";
 import { renderRoutes } from "react-router-config";
 import { Layout } from "antd";
 import { Sidebar } from "./Sidebar";

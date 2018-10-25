@@ -1,11 +1,11 @@
-// tslint:disable:mocha-no-side-effect-code
+import { GraphQLSchema, GraphQLError } from "graphql";
 import * as Api from "./api";
 import { ModelProviderBase, State } from "../modelProviderBase";
-import { GraphQLSchema, GraphQLError } from "graphql";
 import { patchGraphQL } from "./patch";
 import { getAppGlobals } from "../appGlobals";
 import { healthcheck } from "./apiHealthcheck";
 import { setTrace } from "../utils";
+import { graphqlMiddleware } from "../middleware/graphQL";
 
 setTrace(console.log);
 
@@ -127,4 +127,9 @@ describe("GrpahQl API test", () => {
         expect(rc.ok).toBeTruthy();
     });
 
+    test("GraphQL Koa middleware loads ok", () => {
+        const mdlwr =  graphqlMiddleware(schema, false);
+        expect(mdlwr && typeof mdlwr === "function").toBeTruthy();
+        expect(mdlwr.name).toEqual("middleware");
+    });
 });

@@ -8,22 +8,22 @@ import { PageLayout } from "./layouts/PageLayout";
 
 export const routes: RouteConfig[] = [
     {
-        path: "/",
+        path: `${process.env.PUBLIC_URL}/`,
         exact: true,
         component: () => (<Dashboard />),
     },
     {
-        path: "/todo",
+        path: `${process.env.PUBLIC_URL}/todo`,
         component: () => (<TodoPage title="Todo list"/>),
     },
     {
-        path: "/about",
+        path: `${process.env.PUBLIC_URL}/about`,
         component: () => (<AboutPage />),
     },
 ];
 
 export const route = (
     <Switch>
-        <Route path="/" component={PageLayout} />
+        <Route path={`${process.env.PUBLIC_URL}/`} component={PageLayout} />
     </Switch>
 );

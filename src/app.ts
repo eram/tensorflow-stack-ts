@@ -1,6 +1,6 @@
-import * as path from "path";
 import Koa from "koa";
 import serve from "koa-static";
+import mount from "koa-mount";
 import cors from "@koa/cors";
 import bodyParser from "koa-bodyparser";
 import joiRouter from "koa-joi-router";
@@ -11,12 +11,12 @@ import { responseTimeHandler } from "./middleware/responseTime";
 import { errorChainHandler, appendError, onCtxError } from "./middleware/errorChain";
 import { getAppGlobals } from "./appGlobals";
 
-export type RouterHandler = (ctx: Koa.Context, next?: () => Promise<void>) => Promise<void>;
 
 export interface IRoute {
-    method: "get" | "post" | Array<"get" | "post">;
+    method: "get" | "post" | Array<"get" | "post"> | "static";
     path: string;
-    handler: RouterHandler;
+    handler?: Koa.Middleware;   /* get|post */
+    folder?: string;            /* static */
 }
 
 export { appendError };
@@ -27,11 +27,28 @@ export function main(routes: IRoute[]): Koa {
     const router = joiRouter();
 
     const prefix = process.env.ROUTER_APP || "/";
-    // routes.forEach((route: IRoute) => {
-    //    route.path = path.join(prefix, route.path).replace(/[\\,//]/g, "/");
-    // });
     router.prefix(prefix);
-    router.route(routes as joiRouter.Spec[]);
+
+    console.log("Router setup:", `  prefix: ${prefix}`);
+    routes.forEach((route: IRoute) => {
+
+        if (route.method === "static") {
+            if (!route.folder) throw new Error("missing route.folder");
+            const srv = serve(route.folder, { defer: false, gzip: false });
+            const mnt = mount(route.path, srv);
+            app.use(mnt);
+            console.log(`  ${route.path} => ${route.folder}`);
+        } else {
+            if (!route.handler) throw new Error("missing route.handler");
+            // tslint:disable-next-line:no-any
+            router.route(route as any /*joiRouter.Spec*/);
+            let name = "func?";
+            if (route.handler && route.handler instanceof Array && typeof route.handler[0] === "function") {
+                name = route.handler[0].name;
+            }
+            console.log(`  ${route.path} => ${name}`);
+        }
+    });
 
     // set app midleware
     app.use(errorChainHandler)
@@ -41,12 +58,6 @@ export function main(routes: IRoute[]): Koa {
     if (getAppGlobals().prod) {
         app.use(compress());
     }
-
-    // serve static site
-    let p = process.env.ROUTER_STATIC_FOLDER || "";
-    p = (p.indexOf("\\") > 0 || p.indexOf("/") > 0) ? p : path.join(process.cwd(), "/", p);
-    app.use(serve(p, { defer: false, gzip: false })); // gcp would gzip
-    console.log(`static site: / => ${p}`);
 
     /* TODO
     app.use(koaBunyanLogger(log))
@@ -68,7 +79,6 @@ export function main(routes: IRoute[]): Koa {
     app.context.onerror = onCtxError;
     app.on("error", appOnError);
 
-    printRoutes(router, prefix);
     return app;
 }
 
@@ -91,26 +101,7 @@ function appOnError(err: Error, ctx?: Koa.Context): void {
     }
 }
 
-/**
- * Prints out info about configured endpoints in a router.
- * @param router a router for which to print out all setup routes
- * @param prefix optional, a message to show before printing all routes
- */
-function printRoutes(router: joiRouter.Router, prefix?: string) {
-
-    const output: string[] = [];
-    router.routes.map((spec: joiRouter.Spec) => {
-        let name = "";
-        if ( spec && spec.handler && spec.handler instanceof Array && spec.handler[0].prototype) {
-            name = spec.handler[0].name;
-        }
-        output.push(`${name}: ${spec.path} validation: ${spec.validate ? "exists" : "none"}`);
-    });
-    console.log("Router setup:\n", `prefix: ${prefix}`, output);
-}
-
 /*
-
 // Security headers
 app.use(koaHelmet());
 app.use(koaHelmet.contentSecurityPolicy({ directives: { defaultSrc: ["'self'"] } }));

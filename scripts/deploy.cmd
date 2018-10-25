@@ -8,9 +8,9 @@ set /P REACT_APP_VERSION=<%temp%\tmp-ver
 del %temp%\tmp-ver
 echo REACT_APP_VERSION=%REACT_APP_VERSION%
 
-set PUBLIC_URL=https://tensorflow-stack-ts.appspot.com
-set REACT_APP_ENDPOINT=%PUBLIC_URL%/stack/api/graphql
-set REACT_APP_HEALTHCHECK=%PUBLIC_URL%/stack/api/_healthcheck
+set PUBLIC_URL=/app
+set REACT_APP_ENDPOINT=stack/api/graphql
+set REACT_APP_HEALTHCHECK=/stack/api/_healthcheck
 
 call npm run clean
 if errorlevel 1 goto err

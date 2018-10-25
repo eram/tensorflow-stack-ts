@@ -23,19 +23,19 @@ export class Sidebar extends React.Component<{}, ISidebarState> {
                 <div className={`logo${(this.state.collapsed) ? " logo-small" : ""}`} />
                 <Menu theme="dark" mode={this.state.mode} defaultSelectedKeys={["1"]}>
                     <Menu.Item key="1">
-                        <Link to="/">
+                        <Link to={`${process.env.PUBLIC_URL}/`}>
                             <Icon type="dashboard" />
                             <span className="nav-text">Dashboard</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="2">
-                        <Link to="/todo">
+                        <Link to={`${process.env.PUBLIC_URL}/todo`}>
                             <Icon type="check-square-o" />
                             <span className="nav-text">Todo</span>
                         </Link>
                     </Menu.Item>
                     <Menu.Item key="3">
-                        <Link to="/about">
+                        <Link to={`${process.env.PUBLIC_URL}/about`}>
                             <Icon type="file" />
                             <span className="nav-text">About</span>
                         </Link>

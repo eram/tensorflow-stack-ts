@@ -4,42 +4,42 @@ import { isBuffer } from "util";
 import * as Dotenv from "dotenv";
 import dotevExpand from "dotenv-expand";
 import * as App from "./app";
-import { healthcheckRequest } from "./middleware/healthcheck";
 import { IndexSig } from "./utils";
 import * as GqlApi from "./graphqlApi";
 import * as Model from "./tensorFlowProvider";
 import { setProcessHandelers } from "./processOn";
 import { getAppGlobals } from "./appGlobals";
+import { healthcheckRequest } from "./middleware/healthcheck";
+import { graphqlMiddleware } from "./middleware/graphQL";
 
 
-// tslint:disable-next-line:no-require-imports no-unsafe-any no-var-requires
-const graphqlHTTP: (options: IndexSig) => App.RouterHandler = require("koa-graphql");
 const appGlobals = getAppGlobals();
 
 async function main(argv: string[]): Promise<number> {
 
+    const env = process.env;
     setProcessHandelers(appGlobals);
     console.log("argv:", argv);
 
-    if (!process.env.ROUTER_APP || !process.env.PORT) {
+    if (!env.ROUTER_APP || !env.PORT) {
 
         // get config from environment: use "--resolve" to set the .env file
         console.log("loading env from .env", argv);
-        let env = Dotenv.config();
-        if (env.error) {
+        let dotenv = Dotenv.config();
+        if (dotenv.error) {
             console.warn(".env load failed. loading .debug.env");
             const fileName = path.resolve(process.cwd(), ".debug.env");
-            env = Dotenv.config({ path: fileName });
+            dotenv = Dotenv.config({ path: fileName });
         }
-        dotevExpand(env);
+        dotevExpand(dotenv);
     }
 
-    if (!process.env.ROUTER_APP || !process.env.PORT) {
+    if (!env.ROUTER_APP || !env.PORT) {
         console.error(`failed to load environment`);
         return 2;
     }
 
-    console.log("env loded:", process.env);
+    console.log("env loded:", env);
 
     // get version from package.json
     const p = path.resolve(process.cwd(), "./package.json");
@@ -56,7 +56,7 @@ async function main(argv: string[]): Promise<number> {
         return 2;
     }
 
-    appGlobals.prod = process.env.NODE_ENV === "production";
+    appGlobals.prod = env.NODE_ENV === "production";
     console.log(`version: ${appGlobals.version} production: ${appGlobals.prod}`);
 
     // setup model
@@ -81,28 +81,41 @@ async function main(argv: string[]): Promise<number> {
     const routes: App.IRoute[] = [
         {
             method: "get",
-            path: process.env.ROUTER_HEALTHCHECK || "/_healthcheck",
+            path: env.ROUTER_HEALTHCHECK || "/_healthcheck",
             handler: healthcheckRequest,
         },
         {
             method: ["get", "post"],
-            path: process.env.ROUTER_GRAPHQL || "/graphql",
-            handler: graphqlHTTP({
-                schema: appGlobals.schema,
-                graphiql: !appGlobals.prod,
-            }),
+            path: env.ROUTER_GRAPHQL || "/graphql",
+            handler: graphqlMiddleware(appGlobals.schema, !appGlobals.prod || Boolean(process.env.ROUTER_SHOW_GRAPHIQL)),
         },
     ];
 
+    if (env.ROUTER_CLIENT_FOLDER && fs.existsSync(env.ROUTER_CLIENT_FOLDER)) {
+        routes.push({
+            method: "static",
+            path: env.ROUTER_CLIENT_PATH || "/app",
+            folder: env.ROUTER_CLIENT_FOLDER,
+        });
+    }
+
+    if (env.ROUTER_PUBLIC_FOLDER && fs.existsSync(env.ROUTER_PUBLIC_FOLDER)) {
+        routes.push({
+            method: "static",
+            path: env.ROUTER_PUBLIC_PATH || "/",
+            folder: env.ROUTER_PUBLIC_FOLDER,
+        });
+    }
+
     // go!
     const server = App.main(routes);
-    appGlobals.server = server.listen(process.env.PORT);
+    appGlobals.server = server.listen(env.PORT);
     if (!appGlobals.server.listening) {
-        console.error(`failed to start server on port ${process.env.PORT}`);
+        console.error(`failed to start server on port ${env.PORT}`);
         return 3;
     }
 
-    console.log(`Server started on port ${process.env.PORT}`);
+    console.log(`Server started on http://${env.HOST}:${env.PORT}`);
     return 0;
 }
 

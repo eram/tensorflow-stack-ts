@@ -1,32 +1,31 @@
 import * as Koa from "koa";
-import { IRoute, RouterHandler, main, appendError } from "./app";
+import { IRoute, main, appendError } from "./app";
 import { Server } from "http";
 // tslint:disable-next-line:no-implicit-dependencies
 import * as request from "supertest";
-
 
 describe("setup koa server", () => {
 
     let app: Server;
     let agent: request.SuperTest<request.Test>;
 
-    const makeError = jest.fn<RouterHandler>(async (ctx: Koa.Context): Promise<void> => {
+    const makeError = jest.fn<Koa.Middleware>(async (ctx: Koa.Context): Promise<void> => {
         appendError(ctx, "makeError called");
         ctx.status = 200;
     });
 
-    const throwFn = jest.fn<RouterHandler>(async (ctx: Koa.Context): Promise<void> => {
+    const throwFn = jest.fn<Koa.Middleware>(async (ctx: Koa.Context): Promise<void> => {
         ctx.assert(false);
     });
 
-    const longFn = jest.fn<RouterHandler>(async (ctx: Koa.Context): Promise<void> => {
+    const longFn = jest.fn<Koa.Middleware>(async (ctx: Koa.Context): Promise<void> => {
         ctx.status = 200;
         return new Promise<void>((resolve) => {
             setTimeout(() => { resolve(); }, 300);
         });
     });
 
-    const breakFn = jest.fn<RouterHandler>(async (ctx: Koa.Context): Promise<void> => {
+    const breakFn = jest.fn<Koa.Middleware>(async (ctx: Koa.Context): Promise<void> => {
         ctx.status = 200;
         const err = new Error("breakFn called");
         if (Error.captureStackTrace) Error.captureStackTrace(err, breakFn);
@@ -52,6 +51,11 @@ describe("setup koa server", () => {
         method: "get",
         path: "/break",
         handler: breakFn,
+    },
+    {
+        method: "static",
+        path: "/static",
+        folder: "public",
     }];
 
     beforeAll(() => {
@@ -103,4 +107,10 @@ describe("setup koa server", () => {
         expect(longFn).toBeCalled();
     });
 
+    test("static request", async () => {
+
+        const res = await agent.get(routes[4].path);
+        expect(res.status).toEqual(200);
+        expect(res.type).toEqual("text/html");
+    });
 });

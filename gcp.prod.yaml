@@ -4,15 +4,19 @@ runtime: nodejs8
 
 env_variables:
   PUBLIC_URL: "https://tensorflow-stack-ts.appspot.com"
-  HTTPS: false
+  HTTPS: true
   NODE_OPTIONS: "--max-old-space-size=256"
   ROUTER_APP: "/stack"
   ROUTER_MAIN_API:  "/api"
   ROUTER_HEALTHCHECK:  "/api/_healthcheck"
-  ROUTER_GRAPHQL: "/api/graphql"
-  ROUTER_STATIC_FOLDER: "client/build"
-  ROUTER_STATIC_PATH: "/"
+  ROUTER_PUBLIC_PATH: "/"
+  ROUTER_PUBLIC_FOLDER: "public"
+  ROUTER_CLIENT_PATH: "/app"
+  ROUTER_CLIENT_FOLDER: "client/build"
   ROUTER_MAX_RESPONSE_TIME: 200
+  ROUTER_GRAPHQL: "/api/graphql"
+  ROUTER_SHOW_GRAPHIQL: true
+
   # DATABASE
   # DB_USER: "postgres"
   # DB_HOST: "localhost"
