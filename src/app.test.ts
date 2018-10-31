@@ -1,12 +1,16 @@
 import * as Koa from "koa";
+import Application from "koa";
 import { IRoute, main, appendError } from "./app";
 import { Server } from "http";
 // tslint:disable-next-line:no-implicit-dependencies
 import * as request from "supertest";
+import { getAppGlobals } from "./appGlobals";
+import { errorChainHandler } from "./middleware/errorChain";
 
 describe("setup koa server", () => {
 
-    let app: Server;
+    let app: Application;
+    let srv: Server;
     let agent: request.SuperTest<request.Test>;
 
     const makeError = jest.fn<Koa.Middleware>(async (ctx: Koa.Context): Promise<void> => {
@@ -29,7 +33,7 @@ describe("setup koa server", () => {
         ctx.status = 200;
         const err = new Error("breakFn called");
         if (Error.captureStackTrace) Error.captureStackTrace(err, breakFn);
-        app.emit("error", err);
+        srv.emit("error", err);
     });
 
     const routes: IRoute[] = [{
@@ -58,16 +62,22 @@ describe("setup koa server", () => {
         folder: "public",
     }];
 
+    let origProd = false;
+
     beforeAll(() => {
         process.env.ROUTER_APP = "";
-        app = main(routes).listen(1111);
-        agent = request.agent(app);
+        origProd = getAppGlobals().prod;
+        getAppGlobals().prod = false;
+        app = main(routes);
+        srv = app.listen(1111);
+        agent = request.agent(srv);
     });
 
     afterAll((done) => {
-        if (app) {
-            app.close(done);
+        if (srv) {
+            srv.close(done);
         }
+        getAppGlobals().prod = origProd;
     });
 
     test("check routes validity", async () => {
@@ -107,10 +117,36 @@ describe("setup koa server", () => {
         expect(longFn).toBeCalled();
     });
 
+    test("app breaking request", async () => {
+
+        const res = await agent.get(routes[3].path);
+        expect(res.status).toEqual(500);
+        expect(breakFn).toBeCalled();
+        expect(res.body.stack).toBeDefined();
+        expect(res.body.stack.length).toBeGreaterThan(100);
+    });
+
     test("static request", async () => {
 
         const res = await agent.get(routes[4].path);
         expect(res.status).toEqual(200);
         expect(res.type).toEqual("text/html");
+    });
+
+    test("app onError is called", async () => {
+
+        // tslint:disable-next-line:no-any
+        const ctx = app.createContext({} as any, {} as any);
+        ctx.url = "/t1";
+        ctx.status = 200;
+
+        const before = getAppGlobals().stats.errors;
+
+        await errorChainHandler(ctx, async () => {
+            app.emit("error", new Error("e2"), ctx);
+        });
+
+        expect(getAppGlobals().stats.errors).toBeGreaterThan(before);
+        expect(ctx.state.errorChain.length).toBeGreaterThan(0);
     });
 });

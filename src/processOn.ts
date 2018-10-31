@@ -32,13 +32,13 @@ export function setProcessHandelers(g: AppGlobals): void {
 
     process.on("uncaughtException", (err: Error) => {
         console.error(err);
-        g.stats.exceptions++;
+        g.stats.errors++;
         process.exit(1);
     });
 
     process.on("unhandledRejection", (err: Error) => {
         console.error(err);
-        g.stats.exceptions++;
+        g.stats.errors++;
         throw err;
     });
 

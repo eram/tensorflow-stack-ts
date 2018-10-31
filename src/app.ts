@@ -8,7 +8,7 @@ import compress from "koa-compress";
 // tslint:disable-next-line:no-require-imports no-var-requires
 const userAgent = require("koa-useragent") as Koa.Middleware;
 import { responseTimeHandler } from "./middleware/responseTime";
-import { errorChainHandler, appendError, onCtxError } from "./middleware/errorChain";
+import { errorChainHandler, appendError, appOnError } from "./middleware/errorChain";
 import { getAppGlobals } from "./appGlobals";
 
 
@@ -75,31 +75,10 @@ export function main(routes: IRoute[]): Koa {
         .use(bodyParser())
         .use(router.middleware());
 
-    // Error catching - override koa's undocumented error handler
-    app.context.onerror = onCtxError;
     app.on("error", appOnError);
-
     return app;
 }
 
-// koa.onError function
-function appOnError(err: Error, ctx?: Koa.Context): void {
-
-    // ctx exists if this is error inside a request context
-    const errorDetails = {
-        status: ctx ? ctx.status : 0,
-        url: (ctx && ctx.request !== undefined) ? ctx.request.url : "",
-        error: err.message,
-        stack: err.stack,
-        err,
-    };
-
-    if (ctx) {
-        appendError(ctx, JSON.stringify(errorDetails, null, 2));
-    } else {
-        console.warn("Koa app.onError:", errorDetails);
-    }
-}
 
 /*
 // Security headers

@@ -5,75 +5,72 @@ import { getAppGlobals } from "../appGlobals";
 
 const appGlobals = getAppGlobals();
 
+// error chain is used by deeper levels of the app to send errors found up the chain.
+// we also handle here context errors and koa app errors
+
 export async function errorChainHandler(ctx: Koa.Context, next: () => Promise<void>) {
 
-    // error chain is used by deeper levels of the app to send up the chain errors found.
-    const errorChain: string[] = [];
-    (ctx.state as IndexSig).errorChain = errorChain;
+    const state = ctx.state as IndexSig;
+    state.errorChain = [];
 
-    await next().catch((err: Error) => {
-        console.error("Koa: Exception caught in exception middleware", { err });
-        if (err instanceof HttpErrors.HttpError) {
-            ctx.status = err.statusCode || err.status || 500;
-            ctx.set("Content-Type", "text/json");
-            ctx.body = { message: err.message };
-        } else {
-            ctx.status = 500;
-            ctx.set("Content-Type", "text/json");
-            ctx.body = { message: "Internal server error" };
+    await next().catch((err: HttpErrors.HttpError) => {
 
-            // re-throw the error >> will be caught in app.onError
-            const err2 = new Error(err.message);
-            err2.stack = err.stack;
-            throw err2;
+        appGlobals.stats.errors++;
+
+        ctx.status = err.statusCode || err.status || 500;
+        ctx.type = "json";
+        if (!ctx.message.length) {
+            ctx.message = err.message;
         }
 
-        errorChain.push(`${ctx.href} exeption in middleware:${err.message} `);
+        ctx.body = {
+            error: (err.message) ? err.message : "Internal server error",
+        };
+
+        // on dev send the stack to the client
+        if (!appGlobals.prod && err.stack) {
+            ctx.body = {
+                ...ctx.body,
+                code: err.code,
+                stack: err.stack,
+            };
+        }
+
+        ctx.state.errorChain.push(`${ctx.href} ${ctx.status}: ${err.stack}`);
     });
 
-    if (ctx.status !== 200) {
-        errorChain.push(`${ctx.href} ${ctx.status}:${ctx.message}`);
+    if (ctx.status >= 400 && !state.errorChain.length) {
+        state.errorChain.push(`${ctx.href} ${ctx.status}: ${JSON.stringify(ctx.body, null, 2)}`);
     }
 
-    if (errorChain.length) {
+    if (state.errorChain.length) {
         let msg = "", errors = 0;
-        errorChain.forEach((str) => { msg += `${errors++}: \"${str}\",\n`; });
-        console.error(`errorChain: [\n${msg}]`);
+        state.errorChain.forEach((str: string) => { msg += `${errors++}: \"${str}\",\n`; });
+        console.error(`errorChain: [\n${msg}   ]`);
     }
 }
 
 export function appendError(ctx: Koa.Context, err: string): void {
 
-    const errorChain = ctx ? ctx.state ? ((ctx.state as IndexSig).errorChain as string[]) : [] : [];
-    errorChain.push(err);
+    const state = ctx.state as IndexSig;
+    if (state && state.errorChain) {
+        state.errorChain.push(err);
+    }
 }
 
+// koa.onError function
+export function appOnError(err: Error, ctx?: Koa.Context): void {
 
-// Error catching - override koa's undocumented error handler
-export function onCtxError(this: Koa.Context, err: HttpErrors.HttpError) {
-    if (!err) return;
+    console.warn("Koa app.onError:", err);
+    appGlobals.stats.errors++;
 
-    this.status = err.status || 500;
-    this.app.emit("error", err, this);
-
-    if (this.headerSent || !this.writable) {
-        err.headerSent = true; // eslint-disable-line no-param-reassign
-        return;
+    // ctx exists if this is error inside a request context
+    if (ctx) {
+        const details = {
+            url: (ctx.request) ? ctx.request.url : "",
+            status: ctx.status,
+            ...err,
+        };
+        appendError(ctx, JSON.stringify(details, null, 2));
     }
-
-    // on dev we respond with the full error details
-    if (!appGlobals.prod) {
-        this.body = JSON.stringify({
-            error: err.message,
-            stack: err.stack,
-            code: err.code,
-        });
-        this.type = "json";
-    } else {
-        // just send the error message
-        this.body = err.message;
-    }
-
-    this.res.end(this.body);
 }
-

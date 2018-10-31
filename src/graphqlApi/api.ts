@@ -3,8 +3,10 @@ import { SchemaRoot, Query, InputObjectType, InputField, registerEnum, compileSc
 import { GraphQLSchema } from "graphql";
 import { patchGraphQL } from "./patch";
 import { trace } from "../utils";
+import { getAppGlobals } from "../appGlobals";
 
 const nullTensor = JSON.stringify([]);
+const stats = getAppGlobals().stats;
 
 @InputObjectType({ description: "holds an input tensor and the tagged output tensor" })
 class TrainData /*implements Model.ITrainData*/ {
@@ -25,18 +27,21 @@ class ApiSchema {
 
     @Query()
     getState(): string {
+        stats.apis++;
         const state = model.getState();
         return Model.State[state];
     }
 
     @Query()
     getName(): string {
+        stats.apis++;
         return model.getName();
     }
 
     @Query({ type: String })
     async predict(inStr: string): Promise<string> {
 
+        stats.apis++;
         trace("ESTIMATE inStr: ", inStr);
 
         if (typeof inStr !== "string") {
