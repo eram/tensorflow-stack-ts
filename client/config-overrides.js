@@ -62,8 +62,7 @@ function appendDotenv(config) {
     if (plugin) {
 
         const pdefs = plugin.definitions["process.env"];
-
-        pdefs.REACT_APP_BUILDTIME = new Date().valueOf().toString();
+        process.env.REACT_APP_BUILDTIME = pdefs.REACT_APP_BUILDTIME = new Date().valueOf().toString();
 
         for (var key in env) {
             if (key) {
