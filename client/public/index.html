@@ -21,7 +21,6 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
   <title>TensorFlow Stack TS</title>
-
   <style>
     .progress {
       height: 40px;
@@ -90,11 +89,24 @@
     }
   </style>
 </head>
+
 <body>
   <noscript>
     You need to enable JavaScript to run this app.
   </noscript>
   <div id="root">
+    <script>
+      // this script redirects to the /app folder where the app is
+      // it also adds a timestamp to the URL to prevent loading from old resource
+      var url = new URL(document.location.href);
+      const pathname = `${process.env.PUBLIC_URL}`;
+      const v = `${process.env.REACT_APP_BUILDTIME % 77777}.` + Math.round(Date.now().valueOf() / 10000) % 77777;
+      if (url.pathname !== pathname || url.searchParams.get("v") !== v) {
+        url.pathname = pathname;
+        url.searchParams.set("v", v);
+        document.location.href = url.href;
+      }
+    </script>
     <div class="progress container">
       <span></span>
       <span></span>
@@ -117,4 +129,5 @@
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
 </body>
+
 </html>

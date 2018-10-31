@@ -58,41 +58,34 @@ function appendDotenv(config) {
     var found = 0;
 
     // build environment into config
-    const plugin = config.plugins.find(p => p.definitions !== undefined && p.definitions["process.env"]);
+    let plugin = config.plugins.find(p => p.definitions !== undefined && p.definitions["process.env"]);
     if (plugin) {
 
         const pdefs = plugin.definitions["process.env"];
+
+        pdefs.REACT_APP_BUILDTIME = new Date().valueOf().toString();
 
         for (var key in env) {
             if (key) {
 
                 // take all the REACT_APP_XXX and append into the definitions plugins.
                 if (key.indexOf("REACT_APP_") === 0) {
-                    if (!pdefs[key]) {
-                        pdefs[key] = JSON.stringify(env[key]);
-                    }
-                    if (!process.env[key]) {
-                        process.env[key] = env[key];
-                    }
+                    pdefs[key] = JSON.stringify(env[key]);
+                    process.env[key] = env[key];
                     found++;
-                }
+                } else
 
                 // PUBLIC_URL is required for root of app
-                if (key.indexOf("PUBLIC_URL") === 0) {
-                    if (!pdefs[key] || pdefs[key].length < 4) {
-                        pdefs[key] = JSON.stringify(env[key]);
-                    }
-                    if (!process.env[key]) {
-                        process.env[key] = env[key];
-                    }
-                }
+                if (key === "PUBLIC_URL") {
+                    pdefs[key] = JSON.stringify(env[key]);
+                    process.env[key] = env[key];
+                    log(`process.env.PUBLIC_URL: ${env[key]}`);
+                } else
 
                 // PORT is the Webpack dev server port
-                if (key.indexOf("REACT_DEVSRV_PORT" === 0)) {
-                    if (!process.env.PORT) {
-                        process.env.PORT = Number.parseInt(env.REACT_DEVSRV_PORT, 10);
-                        log(`process.env.PORT: ${process.env.PORT}`);
-                    }
+                if (key === "REACT_DEVSRV_PORT") {
+                    process.env.PORT = Number.parseInt(env.REACT_DEVSRV_PORT, 10);
+                    log(`process.env.PORT: ${process.env.PORT}`);
                 }
             }
         }
@@ -101,6 +94,16 @@ function appendDotenv(config) {
     if (!found) {
         throw new Error("Missing env vars for React App");
     }
+
+    /*
+    // update plugins.replacements.PUBLIC_URL
+    plugin = config.plugins.find(p => p.replacements !== undefined);
+    if (plugin) {
+        plugin.replacements.PUBLIC_URL = `\"${process.env.PUBLIC_URL}\"`;
+    }
+
+    config.output.publicPath = process.env.PUBLIC_URL;
+    */
 
     return config;
 }
