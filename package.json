@@ -1,6 +1,6 @@
 {
   "name": "tensorflow-stack-ts",
-  "version": "1.0.22",
+  "version": "1.0.23",
   "description": "tensortflow.js full-stack starter kit",
   "scripts": {
     "start": "node ./build/dist/src",
