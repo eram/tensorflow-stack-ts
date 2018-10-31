@@ -3,24 +3,81 @@
  * Code adapted from https://medium.com/tensorflow/getting-started-with-tensorflow-js-50f6783489b2
  */
 
-// Load tf binding and library
-// tslint:disable-next-line:no-require-imports no-var-requires
-// import "@tensorflow/tfjs-node";  // Use '@tensorflow/tfjs-node-gpu' if running with GPU.
-import * as tf from "@tensorflow/tfjs";
-
-// tslint:disable-next-line:no-require-imports no-var-requires
-// require("canvas-prebuilt"); // needed for tfjs
-
+// just load the tf types so we can compile. the lib itself is loaded in loadTensorFlow()
+import * as tf from "@tensorflow/tfjs/dist/index";
 import { ModelProviderBase, IOpaqueTensor, State, ITrainData } from "../modelProviderBase";
 import { trace } from "../utils";
+import { getAppGlobals } from "../appGlobals";
+import { IndexSig } from "../utils/typeUtils.test";
+
+
+// Load tf binding and libraries
+function loadTensorFlow() {
+
+    console.log("\n\n==============================\nLoading TensorFlow.js...");
+
+    require("@tensorflow/tfjs");
+    console.log("@tensorflow/tfjs loaded");
+
+    if (process.env.TF_LOAD_NODE_LIB === "true") {
+        require("@tensorflow/tfjs-node");
+        console.log("@tensorflow/tfjs-node loaded");
+    }
+
+    if (process.env.TF_LOAD_NODEGPU_LIB === "true") {
+        require("@tensorflow/tfjs-node-gpu");
+        console.log("@tensorflow/tfjs-node-gpu loaded");
+    }
+
+    console.log("tf.version:", tf.version);
+
+    // set soem of the features based on environment
+    const features: Partial<tf.Features> = {
+        DEBUG: process.env.TP_ENABLE_PROFILER === "true",   // enable profiler.
+        IS_BROWSER: false,                                  // running in a browser
+        IS_NODE: true,                                      // running under nodejs
+        IS_CHROME: false,                                   // ??
+        IS_TEST: false,                                     // True if running tfjs unit tests.
+        PROD: getAppGlobals().prod,                         // production => disable safety checks to gain performance
+        /*
+        'WEBGL_CONV_IM2COL'?: boolean;
+        'WEBGL_PAGING_ENABLED'?: boolean;
+        'WEBGL_MAX_TEXTURE_SIZE'?: number;
+        'WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_VERSION'?: number;
+        'WEBGL_DISJOINT_QUERY_TIMER_EXTENSION_RELIABLE'?: boolean;
+        'WEBGL_VERSION'?: number;
+        'HAS_WEBGL'?: boolean;
+        'WEBGL_RENDER_FLOAT32_ENABLED'?: boolean;
+        'WEBGL_DOWNLOAD_FLOAT_ENABLED'?: boolean;
+        'WEBGL_FENCE_API_ENABLED'?: boolean;
+        'WEBGL_SIZE_UPLOAD_UNIFORM'?: number;
+        'BACKEND'?: string;
+        'TEST_EPSILON'?: number;
+        'TENSORLIKE_CHECK_SHAPE_CONSISTENCY'?: boolean;
+        */
+    };
+
+    tf.ENV.setFeatures(features);
+    console.log("tf.features:", tf.ENV.getFeatures());
+    console.log("tf.backend.binding:", (tf.ENV.backend as IndexSig).binding);
+    console.log("TensorFlow.js loaded.\n==============================\n\n");
+}
+
 
 export class TensorFlowProvider extends ModelProviderBase {
 
-    model = tf.sequential();
+    static tfLoaded = false;
+    private model: tf.Sequential;
 
     constructor() {
         super("single node tf.sequential");
 
+        if (!TensorFlowProvider.tfLoaded) {
+            TensorFlowProvider.tfLoaded = true;
+            loadTensorFlow();
+        }
+
+        this.model = tf.sequential();
         this.model.add(tf.layers.dense({ units: 1, inputShape: [1] }));
         this.model.compile({
             loss: "meanSquaredError",

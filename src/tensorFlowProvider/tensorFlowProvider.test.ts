@@ -4,9 +4,16 @@ import { getModelProvider } from "./";
 import { TensorFlowProvider, defaultTrainData } from "./tensorFlowProvider";
 import { setTrace } from "../utils";
 
-setTrace(console.log);
 
 describe("tensorFlowProvider class", async () => {
+
+    beforeAll(() => {
+        setTrace(console.log);
+        process.env.TF_LOAD_NODE_LIB = "false";     // true under jest fails on predict!
+        process.env.TF_LOAD_NODEGPU_LIB = "true";
+        process.env.TF_CPP_MIN_LOG_LEVEL = "5";
+        process.env.TF_CPP_MIN_VLOG_LEVEL = "5";
+    });
 
     test("load provider", () => {
 
@@ -30,7 +37,7 @@ describe("tensorFlowProvider class", async () => {
         const provider = new TensorFlowProvider();
         let rc = await provider.init();
 
-        const data = defaultTrainData() ;
+        const data = defaultTrainData();
 
         rc = await provider.train(data);
         expect(rc).toBeTruthy();
@@ -44,7 +51,7 @@ describe("tensorFlowProvider class", async () => {
         const provider = new TensorFlowProvider();
         let rc = await provider.init();
 
-        const data = defaultTrainData() ;
+        const data = defaultTrainData();
 
         rc = await provider.train(data);
         expect(rc).toBeTruthy();

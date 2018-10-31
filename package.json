@@ -42,6 +42,8 @@
   "dependencies": {
     "@koa/cors": "^2.2.2",
     "@tensorflow/tfjs": "^0.13.1",
+    "@tensorflow/tfjs-node": "^0.1.19",
+    "@tensorflow/tfjs-node-gpu": "^0.1.19",
     "dotenv": "^6.1.0",
     "dotenv-expand": "^4.2.0",
     "freeze-mutate": "^1.1.2",

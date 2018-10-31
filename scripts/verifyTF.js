@@ -10,13 +10,12 @@
 
 async function tfTest() {
 
-    // process.env.TF_CPP_MIN_LOG_LEVEL=2;
-
+    process.env.TF_CPP_MIN_LOG_LEVEL=0
     // Load the TF Node binding:
-    // const tfjsn = require("@tensorflow/tfjs-node"); // Use '@tensorflow/tfjs-node-gpu' if running with GPU.
-    // if (!tfjsn){
-    //    throw new Error("@tensorflow/tfjs-node failed to load.")
-    // };
+    const tfjsn = require("@tensorflow/tfjs-node"); // Use '@tensorflow/tfjs-node-gpu' if running with GPU.
+    if (!tfjsn) {
+        throw new Error("@tensorflow/tfjs-node failed to load.")
+    };
 
     // Load TF
     const tf = require("@tensorflow/tfjs");
@@ -24,6 +23,7 @@ async function tfTest() {
         throw new Error("@tensorflow/tfjs failed to load.");
     }
 
+    console.log(`TF Backend: ${tf.getBackend()}`);
     console.log("\nTEST: TRAINING...");
 
     const model = tf.sequential();
@@ -47,7 +47,7 @@ async function tfTest() {
     const xs = tf.tensor1d(xArr);
     const ys = tf.tensor1d(yArr);
 
-    const epochs = 500;
+    const epochs = 10;
     const h = await model.fit(xs, ys, {
         epochs
     });
