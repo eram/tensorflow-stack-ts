@@ -1,7 +1,5 @@
 import { GraphQLClient } from "graphql-request";
 import * as HttpStaus from "http-status-codes";
-import { IndexSig } from ".";
-
 
 /**
  * Usage example:
@@ -31,54 +29,43 @@ import { IndexSig } from ".";
  *
  */
 
-let client: ClientWrapper;
+let global: ClientWrapper;
+type getTokenFn = () => string;
 
-export class ClientWrapper extends GraphQLClient {
+export class ClientWrapper {
 
-    // static
-    static getGlobal(endpoint: string, token?: string) {
-        if (!client) client = new ClientWrapper(endpoint, token);
-        return client;
-    }
-
-    /* merge the vars into the query - the wat it is done by QraphQL:
-     *
-     * mergeVars("q(in: $p1)", {p1:1}) => "q(in: 1)"
-     *
-     */
-    static mergeVars(query: string, varsObj: IndexSig): string {
-        let key: string;
-        for (key in varsObj) {
-            if (key) {
-
-                // TODO?? sterile regex input
-                const re = `\\\$${key}`; // .replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); // $& means the whole matched string
-                query = query.replace(new RegExp(re, "g"), varsObj[key]);
-            }
-        }
-
-        return query;
+    // global instance
+    static getGlobal(endpoint: string, getToken?: getTokenFn) {
+        if (!global) global = new ClientWrapper(endpoint, getToken);
+        return global;
     }
 
     // instance
+    protected client: GraphQLClient;
     protected errStr = "";
+    protected token = "-";
 
-    constructor(endpoint: string, token?: string) {
-
-        // token = token || "MY_TOKEN";
-        super(endpoint, {
-            credentials: token ? "include" : "omit",
-            mode: "cors",
-            headers: token ? { authorization: `Bearer ${token}` } : {},
-        });
+    constructor(public endpoint: string, public getToken = () => "") {
+        /* */
     }
 
     public async request<VARS, RES>(query: string, vars?: VARS): Promise<RES> {
 
         try {
             this.errStr = "";
+            const token = this.getToken();
 
-            const { data, errors, status } = await this.rawRequest<RES>(query, vars);
+            if (token !== this.token) {
+                this.client = new GraphQLClient(this.endpoint, {
+                    mode: "cors",
+                    credentials: !!token ? "include" : "omit",
+                    // tslint:disable-next-line:object-literal-key-quotes
+                    headers: !!token ? { "Authorization": "Bearer " + token } : {},
+                });
+                this.token = token;
+            }
+
+            const { data, errors, status } = await this.client.rawRequest<RES>(query, vars);
 
             if (errors) {
                 this.errStr = errors[0].message;
@@ -99,6 +86,4 @@ export class ClientWrapper extends GraphQLClient {
     }
 
     getErr() { return this.errStr; }
-
-
 }

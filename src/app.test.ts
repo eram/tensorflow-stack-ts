@@ -36,36 +36,56 @@ describe("setup koa server", () => {
         srv.emit("error", err);
     });
 
+    const helloFn = jest.fn<Koa.Middleware>(async (ctx: Koa.Context): Promise<void> => {
+        ctx.status = 200;
+        ctx.body = "hello";
+    });
+
     const routes: IRoute[] = [{
         method: "get",
         path: "/makeError",
         handler: makeError,
+        auth: false,
+
     },
     {
         method: "get",
         path: "/throw",
         handler: throwFn,
+        auth: false,
     },
     {
         method: "get",
         path: "/long",
         handler: longFn,
+        auth: false,
     },
     {
         method: "get",
         path: "/break",
         handler: breakFn,
+        auth: false,
     },
     {
         method: "static",
         path: "/static",
         folder: "public",
+        auth: false,
+    },
+    {
+        method: "get",
+        path: "/auth",
+        handler: helloFn,
+        auth: true,
     }];
 
     let origProd = false;
 
     beforeAll(() => {
         process.env.ROUTER_APP = "";
+        process.env.JWT_SECRET = "devSecret";
+        process.env.JWT_SECRET_PREV = "oldDevSecret";
+
         origProd = getAppGlobals().prod;
         getAppGlobals().prod = false;
         app = main(routes);
@@ -87,6 +107,7 @@ describe("setup koa server", () => {
                 method: "nogood" as "get",
                 path: "/",
                 handler: breakFn,
+                auth: false,
             }]);
 
         }).toThrow();
@@ -94,12 +115,9 @@ describe("setup koa server", () => {
 
     test("router is working", async () => {
 
-        let res = await agent.get(routes[0].path);
+        const res = await agent.get(routes[0].path);
         expect(res.status).toEqual(200);
         expect(makeError).toBeCalled();
-
-        res = await agent.get("/notFound");
-        expect(res.status).toEqual(404);
     });
 
     test("exception handeling", async () => {
@@ -113,8 +131,11 @@ describe("setup koa server", () => {
 
         const res = await agent.get(routes[2].path);
         expect(res.status).toEqual(200);
-        expect(res.get("x-response-time")).not.toBeUndefined();
         expect(longFn).toBeCalled();
+        // we're not runnign the longRequest middleware when debugger is attached
+        if (!getAppGlobals().debugging) {
+            expect(res.get("x-response-time")).not.toBeUndefined();
+        }
     });
 
     test("app breaking request", async () => {
@@ -131,6 +152,11 @@ describe("setup koa server", () => {
         const res = await agent.get(routes[4].path);
         expect(res.status).toEqual(200);
         expect(res.type).toEqual("text/html");
+    });
+
+    test("auth is needed", async () => {
+        const res = await agent.get(routes[5].path);
+        expect(res.status).toEqual(401);
     });
 
     test("app onError is called", async () => {

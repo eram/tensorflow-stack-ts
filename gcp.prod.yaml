@@ -16,6 +16,7 @@ env_variables:
   ROUTER_MAX_RESPONSE_TIME: 200
   ROUTER_GRAPHQL: "/api/graphql"
   ROUTER_SHOW_GRAPHIQL: true
+  ROUTER_OAUTH: "/oauth"
   TF_CPP_MIN_LOG_LEVEL: 2
   TF_LOAD_NODE_LIB: true
   TF_LOAD_NODEGPU_LIB: false

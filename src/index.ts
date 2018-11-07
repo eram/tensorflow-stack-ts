@@ -11,6 +11,7 @@ import { setProcessHandelers } from "./processOn";
 import { getAppGlobals } from "./appGlobals";
 import { healthcheckRequest } from "./middleware/healthcheck";
 import { graphqlMiddleware } from "./middleware/graphQL";
+import * as oauth from "./middleware/oauthGithub";
 
 
 const appGlobals = getAppGlobals();
@@ -39,7 +40,10 @@ async function main(argv: string[]): Promise<number> {
         return 2;
     }
 
-    console.log("env loded:", env);
+    if (!appGlobals.prod) {
+        // lots of secrets on the prod env so absolutely dont print it all!!
+        console.log("env loded:", env);
+    }
 
     // get version from package.json
     const p = path.resolve(process.cwd(), "./package.json");
@@ -83,11 +87,31 @@ async function main(argv: string[]): Promise<number> {
             method: "get",
             path: env.ROUTER_HEALTHCHECK || "/_healthcheck",
             handler: healthcheckRequest,
+            auth: false,
         },
         {
             method: ["get", "post"],
             path: env.ROUTER_GRAPHQL || "/graphql",
             handler: graphqlMiddleware(appGlobals.schema, !appGlobals.prod || Boolean(process.env.ROUTER_SHOW_GRAPHIQL)),
+            auth: true,
+        },
+        {
+            method: "get",
+            path: env.ROUTER_OAUTH + "/login",
+            handler: oauth.login,
+            auth: false,
+        },
+        {
+            method: "post",
+            path: env.ROUTER_OAUTH + "/revoke",
+            handler: oauth.revoke,
+            auth: false,
+        },
+        {
+            method: "post",
+            path: env.ROUTER_OAUTH + "/refresh",
+            handler: oauth.refresh,
+            auth: false,
         },
     ];
 
@@ -96,6 +120,7 @@ async function main(argv: string[]): Promise<number> {
             method: "static",
             path: env.ROUTER_CLIENT_PATH || "/app",
             folder: env.ROUTER_CLIENT_FOLDER,
+            auth: false,
         });
     }
 
@@ -104,6 +129,7 @@ async function main(argv: string[]): Promise<number> {
             method: "static",
             path: env.ROUTER_PUBLIC_PATH || "/",
             folder: env.ROUTER_PUBLIC_FOLDER,
+            auth: false,
         });
     }
 

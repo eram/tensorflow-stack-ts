@@ -1,3 +1,3 @@
-export * from "./stateMachine";
-export * from "./graphqlQuery";
-export * from "./typeUtils";
+export * from "./StateMachine";
+export * from "./GraphqlQuery";
+export * from "./TypeUtils";

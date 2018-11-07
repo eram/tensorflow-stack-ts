@@ -101,10 +101,9 @@
       var url = new URL(document.location.href);
       const pathname = `${process.env.PUBLIC_URL}`;
       const v = `${process.env.REACT_APP_BUILDTIME % 77777}.` + Math.round(Date.now().valueOf() / (24*60*1000)) % 77777;
-      if (url.pathname !== pathname || url.searchParams.get("v") !== v) {
-        url.pathname = pathname;
+      if (url.pathname === pathname && url.searchParams.get("v") !== v) {
         url.searchParams.set("v", v);
-        document.location.href = url.href;
+        document.location.replace(url.href);
       }
     </script>
     <div class="progress container">

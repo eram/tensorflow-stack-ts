@@ -24,7 +24,7 @@ export async function errorChainHandler(ctx: Koa.Context, next: () => Promise<vo
         }
 
         ctx.body = {
-            error: (err.message) ? err.message : "Internal server error",
+            error: err.message || "Internal server error",
         };
 
         // on dev send the stack to the client
