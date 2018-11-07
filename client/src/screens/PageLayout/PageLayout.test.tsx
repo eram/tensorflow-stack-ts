@@ -3,8 +3,9 @@ import * as React from "react";
 import * as TestRenderer from "react-test-renderer";
 import { StaticRouter } from "react-router";
 import { PageLayout } from "./PageLayout";
+import "../../__mocks__/LocalStorageMock";
 
-xdescribe("PageLayout testing", () => {
+describe("PageLayout testing", () => {
 
     test("Layout match to snapshot", () => {
         const component = TestRenderer.create(

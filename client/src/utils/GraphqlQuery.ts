@@ -29,15 +29,15 @@ import * as HttpStaus from "http-status-codes";
  *
  */
 
-let global: ClientWrapper;
+let theClient: ClientWrapper;
 type getTokenFn = () => string;
 
 export class ClientWrapper {
 
     // global instance
     static getGlobal(endpoint: string, getToken?: getTokenFn) {
-        if (!global) global = new ClientWrapper(endpoint, getToken);
-        return global;
+        if (!theClient) theClient = new ClientWrapper(endpoint, getToken);
+        return theClient;
     }
 
     // instance

@@ -45,7 +45,8 @@
     "react-test-renderer": "^16.5.2",
     "rimraf": "^2.6.2",
     "ts-import-plugin": "^1.5.5",
-    "typescript": "^3.1.3"
+    "typescript": "^3.1.3",
+    "url-polyfill-light": "^1.1.11"
   },
   "jest": {
     "transform": {

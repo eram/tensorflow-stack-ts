@@ -1,4 +1,4 @@
-import { ClientWrapper } from ".";
+import { ClientWrapper } from "./";
 
 test("jest is alive", () => {
     expect(true).toBeTruthy();
@@ -85,17 +85,4 @@ describe("test GraphQL ClientWrapper", () => {
         expect(resp).toBeUndefined();
         expect(tq.getErr()).toContain("failed");
     });
-
-    test("mergeVars", () => {
-
-        const format = `{ predict(inStr: "$tfInput") }`;
-        interface IVars {
-            tfInput: string;
-        }
-
-        const vars: IVars = { tfInput: "home" };
-        const s = ClientWrapper.mergeVars(format, vars);
-        expect(s).toEqual(`{ predict(inStr: "home") }`);
-    });
-
 });

@@ -1,0 +1,190 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`About testing page is loading correctly 1`] = `
+<div
+  className="ant-card ant-card-bordered"
+>
+  <div
+    className="ant-card-head"
+    style={Object {}}
+  >
+    <div
+      className="ant-card-head-wrapper"
+    >
+      <div
+        className="ant-card-head-title"
+      >
+        About TensorFlow Stack TS - Kickstart Your AI Project
+      </div>
+    </div>
+  </div>
+  <div
+    className="ant-card-body"
+    style={Object {}}
+  >
+    <div
+      className="about"
+    >
+      <div
+        className="about-header"
+      >
+        <img
+          alt="logo"
+          className="about-logo"
+          src="logo.svg"
+        />
+      </div>
+      <p
+        className="about-intro"
+      >
+        App version: 
+        <br />
+        <a
+          href="undefined"
+        >
+          GraphQL endpoint
+        </a>
+        <br />
+        <a
+          href="undefined"
+        >
+          Service Healthcheck
+        </a>
+        <br />
+        <a
+          href="https://github.com/eram/tensorflow-stack-ts"
+        >
+          Project Github
+        </a>
+        <br />
+        To get started, edit 
+        <code>
+          src/containers/pages/About.tsx
+        </code>
+         and in a few seconds it reloads.
+      </p>
+      <ul
+        className="ant-rate"
+        onBlur={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onMouseLeave={[Function]}
+        role="radiogroup"
+        style={Object {}}
+        tabIndex={0}
+      >
+        <li
+          aria-checked="false"
+          aria-posinset={1}
+          aria-setsize={5}
+          className="ant-rate-star ant-rate-star-zero"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onMouseMove={[Function]}
+          role="radio"
+          tabIndex={0}
+        >
+          <div
+            className="ant-rate-star-first"
+          >
+            6
+          </div>
+          <div
+            className="ant-rate-star-second"
+          >
+            6
+          </div>
+        </li>
+        <li
+          aria-checked="false"
+          aria-posinset={2}
+          aria-setsize={5}
+          className="ant-rate-star ant-rate-star-zero"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onMouseMove={[Function]}
+          role="radio"
+          tabIndex={0}
+        >
+          <div
+            className="ant-rate-star-first"
+          >
+            6
+          </div>
+          <div
+            className="ant-rate-star-second"
+          >
+            6
+          </div>
+        </li>
+        <li
+          aria-checked="false"
+          aria-posinset={3}
+          aria-setsize={5}
+          className="ant-rate-star ant-rate-star-zero"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onMouseMove={[Function]}
+          role="radio"
+          tabIndex={0}
+        >
+          <div
+            className="ant-rate-star-first"
+          >
+            6
+          </div>
+          <div
+            className="ant-rate-star-second"
+          >
+            6
+          </div>
+        </li>
+        <li
+          aria-checked="false"
+          aria-posinset={4}
+          aria-setsize={5}
+          className="ant-rate-star ant-rate-star-zero"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onMouseMove={[Function]}
+          role="radio"
+          tabIndex={0}
+        >
+          <div
+            className="ant-rate-star-first"
+          >
+            6
+          </div>
+          <div
+            className="ant-rate-star-second"
+          >
+            6
+          </div>
+        </li>
+        <li
+          aria-checked="false"
+          aria-posinset={5}
+          aria-setsize={5}
+          className="ant-rate-star ant-rate-star-zero"
+          onClick={[Function]}
+          onKeyDown={[Function]}
+          onMouseMove={[Function]}
+          role="radio"
+          tabIndex={0}
+        >
+          <div
+            className="ant-rate-star-first"
+          >
+            6
+          </div>
+          <div
+            className="ant-rate-star-second"
+          >
+            6
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+`;
